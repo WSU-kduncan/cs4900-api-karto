@@ -1,4 +1,4 @@
-# API Repositor for Karto
+# API Repository for Karto
 
 ## Contributors
 - Owen Kemp
