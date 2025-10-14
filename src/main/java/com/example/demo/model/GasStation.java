@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,10 +20,10 @@ public class GasStation {
     Integer id;
 
     @Column(name = "longitude", columnDefinition = "DECIMAL(9,6)", nullable = false)
-    Double longitude;
+    BigDecimal longitude;
 
     @Column(name = "latitude", columnDefinition = "DECIMAL(8,6)", nullable = false)
-    Double latitude;
+    BigDecimal latitude;
 
     @Column(name = "name", length = 25, nullable = false)
     String name;
