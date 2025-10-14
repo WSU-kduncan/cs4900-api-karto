@@ -1,0 +1,13 @@
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: Karto-DB-Design
+    restart: always
+    volumes:
+      - ./karto.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=karto
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    ports:
+      - 3306:3306
