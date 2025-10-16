@@ -1,4 +1,4 @@
-CREATE DATABASE karto;
+-- CREATE DATABASE karto;
 
 CREATE OR REPLACE ROLE karto_manager;
 
@@ -6,7 +6,7 @@ GRANT ALL PRIVILEGES ON karto.* TO karto_manager;
 
 USE karto;
 
--- Maintenance Type -- 
+-- Maintenance Type --
 
 DROP TABLE IF EXISTS karto.maintenance_type_description;
 
@@ -58,7 +58,7 @@ CREATE TABLE user (
   user_email        VARCHAR(255)    NOT NULL                                COMMENT 'User Email',
   username          VARCHAR(31)     NOT NULL                                COMMENT 'Username',
   hashed_password   VARCHAR(127)    NOT NULL                                COMMENT 'Hashed Password',
-  created_datetime  DATETIME        NOT NULL    DEFAULT CURRENT_TIMESTAMP   COMMENT 'Time of User Creation', 
+  created_datetime  DATETIME        NOT NULL    DEFAULT CURRENT_TIMESTAMP   COMMENT 'Time of User Creation',
 
   PRIMARY KEY(user_email)
 );
@@ -124,7 +124,7 @@ ALTER TABLE maintenance
 
 DROP TABLE IF EXISTS karto.gas_price;
 
-CREATE TABLE gas_price 
+CREATE TABLE gas_price
 (
   station_id       INT UNSIGNED             NOT NULL    COMMENT 'Station Unique ID',
   gas_type_id      SMALLINT UNSIGNED        NOT NULL    COMMENT 'Gas Type',
@@ -136,13 +136,13 @@ CREATE TABLE gas_price
 )
 COMMENT 'Gas Price';
 
-ALTER TABLE gas_price 
-  ADD FOREIGN KEY (station_id) 
+ALTER TABLE gas_price
+  ADD FOREIGN KEY (station_id)
   REFERENCES gas_station (station_id)
 ;
 
-ALTER TABLE gas_price 
-  ADD FOREIGN KEY (gas_type_id) 
+ALTER TABLE gas_price
+  ADD FOREIGN KEY (gas_type_id)
   REFERENCES gas_type (gas_type_id)
 ;
 
@@ -203,23 +203,23 @@ ALTER TABLE car_image
     FOREIGN KEY (car_vin)
     REFERENCES karto.car(car_vin);
 
--- Trusted Gas Station -- 
+-- Trusted Gas Station --
 DROP TABLE IF EXISTS karto.trusted_gas_station;
 
 CREATE TABLE trusted_gas_station (
   user_email   VARCHAR(255)  NOT NULL  COMMENT 'User Email',
   station_id   INT UNSIGNED  NOT NULL  COMMENT 'Gas Station',
-  
+
   PRIMARY KEY (user_email, station_id)
 );
 
-ALTER TABLE trusted_gas_station 
-    ADD FOREIGN KEY (user_email) 
+ALTER TABLE trusted_gas_station
+    ADD FOREIGN KEY (user_email)
     REFERENCES user (user_email)
 ;
 
-ALTER TABLE trusted_gas_station 
-    ADD FOREIGN KEY (station_id) 
+ALTER TABLE trusted_gas_station
+    ADD FOREIGN KEY (station_id)
     REFERENCES gas_station (station_id)
 ;
 
