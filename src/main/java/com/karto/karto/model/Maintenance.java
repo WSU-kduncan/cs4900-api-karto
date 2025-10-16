@@ -16,7 +16,6 @@ public class Maintenance {
     @Column(name = "maintenance_id", unique = true, columnDefinition = "INT UNSIGNED", nullable = false)
     Integer maintenanceId;
 
-    @Id
     @JoinColumn(name = "car_vin")
     @ManyToOne
     Car car;

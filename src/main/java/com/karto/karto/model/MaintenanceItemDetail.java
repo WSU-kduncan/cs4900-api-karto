@@ -9,12 +9,14 @@ import lombok.Data;
 public class MaintenanceItemDetail {
 
     @Id
-    @JoinColumns({
-            @JoinColumn(name = "maintenance_type_id", columnDefinition = "INT UNSIGNED", nullable = false),
-            @JoinColumn(name = "maintenance_type_id", columnDefinition = "MEDIUMINT UNSIGNED", nullable = false)
-    })
-    @OneToOne
+    @JoinColumn(name = "maintenance_type_id", nullable = false)
+    @ManyToOne
     MaintenanceTypeDescription maintenanceTypeDescription;
+
+    @Id
+    @JoinColumn(name = "maintenance_id", nullable = false)
+    @ManyToOne
+    Maintenance maintenance;
 
     @Column(name = "quantity", columnDefinition = "TINYINT UNSIGNED", nullable = false)
     Integer quantity = 1;

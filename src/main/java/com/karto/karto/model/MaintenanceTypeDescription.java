@@ -9,7 +9,7 @@ import lombok.Data;
 public class MaintenanceTypeDescription {
 
     @Id
-    @Column(name = "maintenance_type_id", nullable = false)
+    @JoinColumn(name = "maintenance_type_id", nullable = false)
     Integer maintenanceTypeId;
 
     @Column(name = "name", length = 30, nullable = false)
