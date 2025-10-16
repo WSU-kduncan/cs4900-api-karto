@@ -1,4 +1,7 @@
-package com.exmple.demo.model;
+package com.example.demo.model;
+
+import com.example.demo.model.User;
+import com.example.demo.model.GasType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,7 +43,7 @@ public class Car {
   @Column(name = "initial_mileage", columnDefinition = "MEDIUM UNSIGNED")
   Integer mileage;
 
-  @Column(name = "gas_type_id", columnDefinition = "SMALLINT UNSIGNED", nullable = false)
+  @JoinColumn(name = "gas_type_id", columnDefinition = "SMALLINT UNSIGNED", nullable = false)
   @ManyToOne
   GasType gasType;
 }

@@ -24,7 +24,7 @@ public class Maintenance {
 
   @JoinColumn(name = "car_vin", nullable = false)
   @ManyToOne
-  Integer vin;
+  Car vin;
 
   @Column(name = "maintenance_datetime", nullable = false)
   Instant maintenanceDate;

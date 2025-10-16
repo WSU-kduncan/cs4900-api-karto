@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+
+import com.example.demo.model.Car;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
