@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.karto.service.model;
 
 import java.math.BigDecimal;
 import java.util.Set;

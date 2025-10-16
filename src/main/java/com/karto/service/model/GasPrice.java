@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.karto.service.model;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -6,7 +6,7 @@ import java.time.Instant;
 import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.example.demo.model.composite.GasPriceId;
+import com.karto.service.model.composite.GasPriceId;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;

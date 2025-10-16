@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.karto.service.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,11 +12,11 @@ import lombok.Data;
 @Entity
 @Table(name = "car_image")
 public class CarImage {
-    @Id
-    @JoinColumn(name = "car_vin", nullable = false)
-    @OneToOne
-    Car car;
+  @Id
+  @JoinColumn(name = "car_vin", nullable = false)
+  @OneToOne
+  Car car;
 
-    @Column(name = "car_image", columnDefinition = "MEDIUMBLOB", nullable = false)
-    byte[] image;
+  @Column(name = "car_image", columnDefinition = "MEDIUMBLOB", nullable = false)
+  byte[] image;
 }

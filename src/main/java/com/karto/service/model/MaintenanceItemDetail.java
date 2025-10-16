@@ -1,6 +1,6 @@
-package com.example.demo.model;
+package com.karto.service.model;
 
-import com.example.demo.model.composite.MaintenanceItemDetailId;
+import com.karto.service.model.composite.MaintenanceItemDetailId;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;

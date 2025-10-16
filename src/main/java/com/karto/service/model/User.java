@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.karto.service.model;
 
 import java.time.Instant;
 import java.util.Set;
