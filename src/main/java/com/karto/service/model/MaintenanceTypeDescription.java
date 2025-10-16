@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.karto.service.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,11 +12,11 @@ import lombok.Data;
 @Data
 @Table(name = "maintenance_type_description")
 public class MaintenanceTypeDescription {
-    @Id
-    @Column(name = "maintenance_type_id", columnDefinition = "MEDIUMINT UNSIGNED", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+  @Id
+  @Column(name = "maintenance_type_id", columnDefinition = "MEDIUMINT UNSIGNED", nullable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  Integer id;
 
-    @Column(name = "name", length = 30, nullable = false)
-    String name;
+  @Column(name = "name", length = 30, nullable = false)
+  String name;
 }

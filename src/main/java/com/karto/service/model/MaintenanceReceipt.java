@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.karto.service.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
