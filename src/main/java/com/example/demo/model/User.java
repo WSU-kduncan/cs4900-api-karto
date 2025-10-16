@@ -1,11 +1,5 @@
 package com.example.demo.model;
 
-import java.time.Instant;
-import java.util.Set;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SourceType;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +9,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.time.Instant;
+import java.util.Set;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
 
 @Data
 @Entity
@@ -38,11 +36,9 @@ public class User {
   Instant creationDate;
 
   @JoinTable(
-    name = "trusted_gas_station",
-    joinColumns = @JoinColumns(name = "user_email"),
-    inverseJoinColumns = @joinColumn(name = "station_id"),
-  )
+      name = "trusted_gas_station",
+      joinColumns = @JoinColumn(name = "user_email"),
+      inverseJoinColumns = @JoinColumn(name = "station_id"))
   @ManyToMany
   Set<GasStation> trustedGasStation;
-
 }

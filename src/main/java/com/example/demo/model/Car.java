@@ -1,7 +1,5 @@
 package com.exmple.demo.model;
 
-import java.time.year;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,13 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.Year;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "car")
 public class Car {
-  
+
   @Id
   @Column(name = "car_vin", columnDefinition = "CHAR(17)", length = 17, nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,10 +38,9 @@ public class Car {
   String color;
 
   @Column(name = "initial_mileage", columnDefinition = "MEDIUM UNSIGNED")
-  Integer = mileage;
+  Integer mileage;
 
-  @Column(name = "gas_type_id", columnDefinition = "SMALLINT UNSIGNED", nullable = false) 
+  @Column(name = "gas_type_id", columnDefinition = "SMALLINT UNSIGNED", nullable = false)
   @ManyToOne
-  GasType = gasType;
-  
+  GasType gasType;
 }

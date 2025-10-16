@@ -17,7 +17,7 @@ import lombok.Data;
 public class GasStation {
 
   @Id
-  @JoinColumn(name = "station_id", nullable = false)
+  @Column(name = "station_id", nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Integer id;
 
