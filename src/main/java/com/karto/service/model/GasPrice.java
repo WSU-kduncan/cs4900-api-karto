@@ -5,7 +5,6 @@ import java.time.Instant;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.karto.service.model.composite.GasPriceId;
 
@@ -17,17 +16,16 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name= "gas_price")
+@Table(name = "gas_price")
 public class GasPrice {
-    
+
     @EmbeddedId
     GasPriceId id;
 
     @Column(name = "price_per_gallon", columnDefinition = "DECIMAL(6, 4)", nullable = false)
     BigDecimal pricePerGallon;
-    
+
     @Column(name = "last_updated", columnDefinition = "DATETIME", nullable = false)
     @CreationTimestamp(source = SourceType.DB)
-    @UpdateTimestamp(source = SourceType.DB)
     Instant lastUpdated;
 }

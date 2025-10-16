@@ -10,14 +10,14 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "gas_type")
-public class GasType {
+@Table(name = "maintenance_type_description")
+public class MaintenanceTypeDescription {
 
     @Id
-    @Column(name = "gas_type_id", columnDefinition = "SMALLINT UNSIGNED", nullable = false)
+    @Column(name = "maintenance_type_id", columnDefinition = "MEDIUMINT", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Integer typeId;
 
-    @Column(name = "name", length = 15, nullable = false)
+    @Column(name = "name", length = 30, nullable = false)
     String name;
 }

@@ -16,11 +16,11 @@ import lombok.Data;
 @Entity
 @Table(name = "car")
 public class Car {
-    
+
     @Id
-    @Column(name = "car_vin", columnDefinition="CHAR(17)", nullable = false)
+    @Column(name = "car_vin", columnDefinition = "CHAR(17)", length = 17, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String carVin;
+    String vin;
 
     @JoinColumn(name = "user_email", nullable = false)
     @ManyToOne
@@ -29,10 +29,16 @@ public class Car {
     @Column(name = "make", length = 20, nullable = false)
     String make;
 
-    @Column(name = "year", columnDefinition="YEAR(4)", nullable = false)
+    @Column(name = "model", length = 40, nullable = false)
+    String model;
+
+    @Column(name = "year", columnDefinition = "YEAR", nullable = false)
     Year year;
 
-    @Column(name = "initial_mileage", columnDefinition="MEDIUMINT", nullable = true)
+    @Column(name = "color", length = 15, nullable = true)
+    String color;
+
+    @Column(name = "initial_mileage", columnDefinition = "MEDIUMINT ", nullable = true)
     Integer initialMileage;
 
     @JoinColumn(name = "gas_type_id", nullable = false)

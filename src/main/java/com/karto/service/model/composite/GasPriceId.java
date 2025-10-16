@@ -8,13 +8,11 @@ import com.karto.service.model.GasType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @Embeddable
-@AllArgsConstructor
-public class GasPriceId implements Serializable{
+public class GasPriceId implements Serializable {
 
     @JoinColumn(name = "station_id", nullable = false)
     @ManyToOne
