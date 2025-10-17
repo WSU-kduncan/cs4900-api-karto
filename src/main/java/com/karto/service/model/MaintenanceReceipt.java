@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -13,8 +14,11 @@ import lombok.Data;
 @Data
 public class MaintenanceReceipt {
     @Id
-    @JoinColumn(name = "maintenance_id", nullable = false)
+    Integer maintenance_id;
+
     @OneToOne
+    @MapsId
+    @JoinColumn(name = "maintenance_id", nullable = false)
     Maintenance maintenance;
 
     @Column(name = "receipt_image", columnDefinition = "MEDIUMBLOB", nullable = false)
