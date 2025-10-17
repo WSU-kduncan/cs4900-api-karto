@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class MaintenanceReceipt {
     @Id
-    Integer maintenance_id;
+    Integer maintenanceId;
 
     @OneToOne
     @MapsId
