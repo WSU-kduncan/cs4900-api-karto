@@ -1,4 +1,4 @@
-package com.karto.service.Dto;
+package com.karto.service.dto;
 
 import lombok.Data;
 
