@@ -10,5 +10,5 @@ public class MaintenanceItemDetailDto {
 
     String comments;
 
-    MaintenanceTypeDescription maintenanceType;
+    MaintenanceTypeDescriptionDto maintenanceType;
 }

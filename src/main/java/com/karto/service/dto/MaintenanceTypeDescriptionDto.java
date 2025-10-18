@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class MaintenanceTypeDescription {
+public class MaintenanceTypeDescriptionDto {
     Integer id;
     String name;
 }
