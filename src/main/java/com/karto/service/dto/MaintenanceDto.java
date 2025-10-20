@@ -12,7 +12,7 @@ import lombok.Data;
 public class MaintenanceDto {
     Integer id;
 
-    Integer carId;
+    String carVin;
 
     Instant date;
 
