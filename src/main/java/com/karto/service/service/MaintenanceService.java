@@ -1,5 +1,7 @@
 package com.karto.service.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.karto.service.model.Maintenance;
@@ -22,6 +24,14 @@ public class MaintenanceService {
         if (response.isEmpty())
             throw new EntityNotFoundException("Maintenance: ID " + id + " Not Found");
         return response.get();
+    }
+
+    public List<Maintenance> getAllMaintenance() {
+        return maintenanceRepository.findAll();
+    }
+
+    public List<Maintenance> getAllMaintenanceByCar(String carVin) {
+        return maintenanceRepository.findByCarVin(carVin);
     }
 
     public MaintenanceReceipt getMaintenanceReceiptById(Integer id) {

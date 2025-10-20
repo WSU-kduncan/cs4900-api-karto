@@ -1,5 +1,7 @@
 package com.karto.service.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -20,4 +22,6 @@ public interface MaintenanceDtoMapper {
     @Mapping(source = "car.vin", target = "carVin")
     @Mapping(source = "receipt.receipt", target = "receipt")
     MaintenanceDto toDto(Maintenance maintenance) throws EntityNotFoundException;
+
+    List<MaintenanceDto> toDtoList(List<Maintenance> maintenances);
 }
