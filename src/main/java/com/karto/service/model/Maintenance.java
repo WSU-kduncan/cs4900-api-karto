@@ -12,7 +12,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.Set;
+import java.util.List;
 
 import lombok.Data;
 
@@ -39,7 +39,7 @@ public class Maintenance {
   BigDecimal cost;
 
   @OneToMany(mappedBy = "id.maintenance")
-  Set<MaintenanceItemDetail> itemDetails;
+  List<MaintenanceItemDetail> itemDetails;
 
   @OneToOne(mappedBy = "maintenance")
   MaintenanceReceipt receipt;

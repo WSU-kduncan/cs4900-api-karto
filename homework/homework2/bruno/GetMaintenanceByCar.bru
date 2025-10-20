@@ -1,0 +1,20 @@
+meta {
+  name: GetMaintenanceByCar
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{BASE_URL}}/maintenance/car/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 1HGCM82633A004352
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

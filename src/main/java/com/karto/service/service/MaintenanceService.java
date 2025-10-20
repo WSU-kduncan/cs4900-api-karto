@@ -31,7 +31,7 @@ public class MaintenanceService {
     }
 
     public List<Maintenance> getAllMaintenanceByCar(String carVin) {
-        return maintenanceRepository.findByCarVin(carVin);
+        return maintenanceRepository.findByCarVinOrderByDateDesc(carVin);
     }
 
     public MaintenanceReceipt getMaintenanceReceiptById(Integer id) {

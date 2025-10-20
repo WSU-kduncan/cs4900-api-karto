@@ -9,5 +9,5 @@ import com.karto.service.model.Maintenance;
 
 @Repository
 public interface MaintenanceRepository extends JpaRepository<Maintenance, Integer> {
-    List<Maintenance> findByCarVin(String vin);
+    List<Maintenance> findByCarVinOrderByDateDesc(String vin);
 }
