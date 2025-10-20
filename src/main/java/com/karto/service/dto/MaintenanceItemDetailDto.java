@@ -11,6 +11,4 @@ public class MaintenanceItemDetailDto {
     String comments;
 
     MaintenanceItemDetailIdDto id;
-
-    MaintenanceTypeDescriptionDto maintenanceType;
 }

@@ -39,5 +39,5 @@ public class Maintenance {
   BigDecimal cost;
 
   @OneToMany(mappedBy = "id.maintenance")
-  Set<MaintenanceItemDetail> maintenanceItemDetails;
+  Set<MaintenanceItemDetail> itemDetails;
 }
