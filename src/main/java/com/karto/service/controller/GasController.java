@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.karto.service.dto.GasPriceDto;
 import com.karto.service.mapper.GasPriceDtoMapper;
+import com.karto.service.model.GasStation;
+import com.karto.service.model.GasType;
 import com.karto.service.service.GasService;
 
 import org.springframework.http.HttpStatus;
@@ -34,15 +36,17 @@ public class GasController {
                 HttpStatus.OK);
     }
 
-//    @GetMapping(path = "price/{id}")
-//    ResponseEntity<GasPriceDto> getGasPriceById(@PathVariable Integer id) {
-//        try {
-//            var gasPrice = gasService.gasTy(id);
-//            return new ResponseEntity<>(gasPriceDtoMapper.toDto(gasPrice), HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
+    @GetMapping(path = "price/gasStation/{stationId}/gasType/{typeId}")
+    ResponseEntity<GasPriceDto> getGasPriceById(@PathVariable Integer stationId, @PathVariable Integer typeId) {
+        try {
+            GasStation gasStation = gasService.getGasStationById(stationId);
+            GasType gasType = gasService.getGasTypeById(typeId);
+            var gasPrice = gasService.getGasPriceById(gasStation, gasType);
+            return new ResponseEntity<>(gasPriceDtoMapper.toDto(gasPrice), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @GetMapping(path = "{gasType}")
     ResponseEntity<List<GasPriceDto>> getGasPriceByGasType(@PathVariable String gasType) {

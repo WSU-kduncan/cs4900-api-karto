@@ -34,17 +34,17 @@ public class GasService {
         return response.get();
     }
 
-    public GasType  getGasTypeById(Integer id) {
+    public GasType getGasTypeById(Integer id) {
         var response = gasTypeRepository.findById(id);
         if (response.isEmpty())
             throw new EntityNotFoundException("Gas Type: ID " + id + " Not Found");
         return response.get();
     }
 
-    public GasPrice getGasPriceById(GasPriceId id) throws EntityNotFoundException {
-        var response = gasPriceRepository.findById(id);
+    public GasPrice getGasPriceById(GasStation gasStation, GasType gasType) throws EntityNotFoundException {
+        var response = gasPriceRepository.findByIdStationAndIdGasType(gasStation, gasType);
         if (response.isEmpty())
-            throw new EntityNotFoundException("Gas Price: ID " + id + " Not Found");
+            throw new EntityNotFoundException("Gas Price: Station " + gasStation.getId() + " or Type: " + gasType.getId() + " Not Found");
         return response.get();
     }
 

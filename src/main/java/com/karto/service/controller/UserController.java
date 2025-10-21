@@ -27,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
     private final UserService userService;
+
     private final UserDtoMapper userMapper;
 
     @GetMapping
@@ -60,6 +61,8 @@ public class UserController {
         try {
             User user = userService.getUserByEmail(email);
             var trustedStations = user.getTrustedGasStations();
+
+            // TODO: delete this print in the after testing
             for (GasStation gasStation : trustedStations) {
                 System.out.println(gasStation.getName());
             }
