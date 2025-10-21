@@ -28,12 +28,4 @@ public class User {
     @Column(name = "created_datetime")
     @CreationTimestamp(source = SourceType.DB)
     Instant createdAt;
-
-    @JoinTable(
-        name = "trusted_gas_station",
-        joinColumns = @JoinColumn(name = "user_email"),
-        inverseJoinColumns = @JoinColumn(name = "station_id")
-    )
-    @ManyToMany
-    List<GasStation> trustedGasStations;
 }

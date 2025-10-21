@@ -1,7 +1,6 @@
 package com.karto.service.dto;
 
 import java.time.Instant;
-import java.util.List;
 
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +18,4 @@ public class UserDto {
     String password;
 
     Instant createdAt;
-
-    List<Integer> trustedGasStationIds;
 }

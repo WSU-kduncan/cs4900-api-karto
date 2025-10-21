@@ -69,4 +69,12 @@ public class GasService {
   public List<GasPrice> getGasPriceByGasType(String gasType) {
     return gasPriceRepository.findById_GasType_Name(gasType);
   }
+
+  public GasPrice getGasPriceById(GasStation gasStation, GasType gasType) throws EntityNotFoundException {
+    var response = gasPriceRepository.findByIdStationAndIdGasType(gasStation, gasType);
+    if (response.isEmpty())
+      throw new EntityNotFoundException(
+          "Gas Price: Station " + gasStation.getId() + " or Type: " + gasType.getId() + " Not Found");
+    return response.get();
+  }
 }

@@ -9,11 +9,18 @@ import lombok.Data;
 @Builder
 public class GasStationDto {
     Integer id;
+
     BigDecimal longitude;
+
     BigDecimal latitude;
+
     String name;
+
     String addressLine;
+
     String city;
+
     String state;
+
     String zip;
 }
