@@ -1,7 +1,6 @@
 package com.karto.service.dto;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import lombok.Data;
 
@@ -15,5 +14,4 @@ public class GasStationDto {
     private String city;
     private String state;
     private String zip;
-    private List<String> userEmails;
 }
