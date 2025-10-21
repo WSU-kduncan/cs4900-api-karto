@@ -12,8 +12,8 @@
 - GET - all cars
 - GET - all cars by owner email (getAllCarsOwnedBy)
 - GET - all cars by vin
-- POST - Update car details
 - POST - Create a new car
+- PUT - Update car details
 
 ### GasType
 
@@ -21,4 +21,4 @@
 - GET - gas type by id
 - GET - gas type by name
 - POST - create new gas type
-- POST - Update gas name
+- PUT - Update gas name
