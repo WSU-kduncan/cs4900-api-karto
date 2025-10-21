@@ -21,10 +21,10 @@ public interface GasStationMapper {
     List<GasStationDto> toDtoList(List<GasStation> gasStations);
 
     @Named("usersToEmails")
-    default Set<String> usersToEmails(Set<User> users) {
+    default List<String> usersToEmails(List<User> users) {
         if (users == null) {
             return null;
         }
-        return users.stream().map(User::getEmail).collect(Collectors.toSet());
+        return users.stream().map(User::getEmail).collect(Collectors.toList());
     }
 }

@@ -21,10 +21,10 @@ public interface UserMapper {
     List<UserDto> toDtoList(List<User> users);
 
     @Named("gasStationsToIds")
-    default Set<Integer> gasStationsToIds(Set<GasStation> stations) {
+    default List<Integer> gasStationsToIds(List<GasStation> stations) {
         if (stations == null) {
             return null;
         }
-        return stations.stream().map(GasStation::getId).collect(Collectors.toSet());
+        return stations.stream().map(GasStation::getId).collect(Collectors.toList());
     }
 }

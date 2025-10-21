@@ -1,6 +1,7 @@
 package com.karto.service.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -43,5 +44,5 @@ public class GasStation {
     String zip;
 
     @ManyToMany(mappedBy = "trustedGasStations")
-    Set<User> users;
+    List<User> users;
 }
