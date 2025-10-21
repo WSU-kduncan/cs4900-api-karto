@@ -41,7 +41,4 @@ public class GasStation {
 
     @Column(name = "zip_code", length = 10, nullable = false)
     String zip;
-
-    @ManyToMany(mappedBy = "trustedGasStations")
-    Set<User> users;
 }

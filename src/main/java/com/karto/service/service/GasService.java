@@ -3,11 +3,12 @@ package com.karto.service.service;
 import com.karto.service.model.GasPrice;
 import com.karto.service.model.GasStation;
 import com.karto.service.model.GasType;
-import com.karto.service.model.composite.GasPriceId;
+import com.karto.service.model.User;
 import com.karto.service.repository.GasPriceRepository;
 
 import com.karto.service.repository.GasStationRepository;
 import com.karto.service.repository.GasTypeRepository;
+import com.karto.service.repository.TrustedGasStationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,8 @@ public class GasService {
     private final GasStationRepository gasStationRepository;
 
     private final GasTypeRepository gasTypeRepository;
+
+    private final TrustedGasStationRepository trustedGasStationRepository;
 
     public List<GasPrice> getAllGasPrices() {
         return gasPriceRepository.findAll();
@@ -50,5 +53,9 @@ public class GasService {
 
     public List<GasPrice> getGasPriceByGasType(String gasType) {
         return gasPriceRepository.findById_GasType_Name(gasType);
+    }
+
+    public List<User> getUsersByGasStation(GasStation gasStation) {
+        return trustedGasStationRepository.findByGasStation(gasStation);
     }
 }

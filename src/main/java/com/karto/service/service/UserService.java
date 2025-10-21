@@ -3,6 +3,8 @@ package com.karto.service.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.karto.service.model.GasStation;
+import com.karto.service.repository.TrustedGasStationRepository;
 import org.springframework.stereotype.Service;
 
 import com.karto.service.model.User;
@@ -16,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final UserRepository userRepository;
+
+    private final TrustedGasStationRepository trustedGasStationRepository;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -35,5 +39,9 @@ public class UserService {
             throw new EntityNotFoundException("User not found with username: " + username);
         }
         return user.get();
+    }
+
+    public List<GasStation> getGasStationByUser(User user) {
+        return trustedGasStationRepository.findByUser(user);
     }
 }

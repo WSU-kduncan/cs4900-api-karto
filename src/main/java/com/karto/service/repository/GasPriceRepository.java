@@ -12,9 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface GasPriceRepository extends JpaRepository<GasPrice, GasPriceId> {
-//    @Query(
-//        value = "SELECT gas_type_id from gas_price gp WHERE gp.gas_type_id = ?1",
-//        nativeQuery = true)
     Optional<GasPrice> findByIdStationAndIdGasType(GasStation id_station, GasType id_gasType);
 
     List<GasPrice> findById_GasType_Name(String gasTypeName);

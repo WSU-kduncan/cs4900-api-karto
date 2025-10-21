@@ -32,8 +32,12 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return new ResponseEntity<>(userMapper.toDtoList(users), HttpStatus.OK);
+        try {
+            List<User> users = userService.getAllUsers();
+            return new ResponseEntity<>(userMapper.toDtoList(users), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping(path = "{email}")
@@ -57,21 +61,12 @@ public class UserController {
     }
 
     @GetMapping(path = "{email}/trustedStations")
-    public ResponseEntity<?> getAllTrustedStationsByEmail(@PathVariable String email) {
+    public ResponseEntity<List<GasStation>> getTrustedGasStationsByUser(@PathVariable String email) {
         try {
             User user = userService.getUserByEmail(email);
-            var trustedStations = user.getTrustedGasStations();
-
-            // TODO: delete this print in the after testing
-            for (GasStation gasStation : trustedStations) {
-                System.out.println(gasStation.getName());
-            }
-            return ResponseEntity.ok(trustedStations);
-        } catch (EntityNotFoundException enfe) {
+            return new ResponseEntity<>(userService.getGasStationByUser(user), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
