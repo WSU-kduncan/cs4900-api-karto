@@ -16,6 +16,6 @@ public interface TrustedGasStationRepository extends JpaRepository<TrustedGasSta
 
     List<User> findByGasStation(GasStation gasStation);
 
-    List<GasStation> findByUser(User user);
+    List<TrustedGasStation> findByUser(User user);
 
 }
