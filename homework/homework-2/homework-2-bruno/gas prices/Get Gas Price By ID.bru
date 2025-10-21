@@ -1,0 +1,23 @@
+meta {
+  name: Get Gas Price By ID
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BASE_URL}}/gas//:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 1
+}
+
+headers {
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+}
