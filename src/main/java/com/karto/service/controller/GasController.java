@@ -43,10 +43,10 @@ public class GasController {
         }
     }
 
-    @GetMapping("stations/{stationName}")
-    ResponseEntity<List<GasPriceDto>> getGasPriceByGasStation(@PathVariable String stationName) {
+    @GetMapping("type/{gasType}")
+    ResponseEntity<List<GasPriceDto>> getGasPriceByGasStation(@PathVariable String gasType) {
         return new ResponseEntity<>(
-                gasPriceDtoMapper.toDtoList(gasService.getGasPriceByGasStation(stationName)),
+                gasPriceDtoMapper.toDtoList(gasService.getGasPriceByGasType(gasType)),
                 HttpStatus.OK);
     }
 }

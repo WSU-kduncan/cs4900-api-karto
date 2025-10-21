@@ -7,9 +7,9 @@ import lombok.Value;
 @Builder
 @Data
 @Value
-public class GasPriceIdDto {
+public class GasTypeDto {
 
-    GasStationDto gasStationId;
+  Integer id;
 
-    GasTypeDto gasTypeId;
+  String name;
 }

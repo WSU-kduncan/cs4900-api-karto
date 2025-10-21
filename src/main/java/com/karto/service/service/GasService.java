@@ -25,7 +25,7 @@ public class GasService {
         return response.get();
     }
 
-    public List<GasPrice> getGasPriceByGasStation(String stationName) {
-        return gasPriceRepository.findByGasStationNameOrderByValue(stationName);
+    public List<GasPrice> getGasPriceByGasType(String gasType) {
+        return gasPriceRepository.findGasPricesByGasType(gasType);
     }
 }

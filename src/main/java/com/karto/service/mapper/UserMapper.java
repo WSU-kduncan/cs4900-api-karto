@@ -15,7 +15,7 @@ import com.karto.service.model.User;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(source = "trustedGasStations", target = "trustedGasStationIds", qualifiedByName = "gasStationsToIds")
+    // @Mapping(source = "trustedGasStations", target = "trustedGasStationIds", qualifiedByName = "gasStationsToIds")
     UserDto toDto(User user);
 
     List<UserDto> toDtoList(List<User> users);

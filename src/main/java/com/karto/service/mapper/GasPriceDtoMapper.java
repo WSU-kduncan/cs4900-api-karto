@@ -15,5 +15,5 @@ public interface GasPriceDtoMapper {
 
     GasPriceDto toDto(GasPrice gasPrice) throws EntityNotFoundException;
 
-    List<GasPriceDto> toDtoList(List<GasPrice> roomList) throws EntityNotFoundException;
+    List<GasPriceDto> toDtoList(List<GasPrice> gasPriceList) throws EntityNotFoundException;
 }

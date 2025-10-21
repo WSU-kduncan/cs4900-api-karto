@@ -54,8 +54,13 @@ public class UserController {
         }
     }
 
+    /*
+        Realistically, we can only do one controller method for finding trusted gas stations:
+        this is because `trustedGasStation` is not an entity in our JPA implementation.
+        Therefore, we cannot traditionally "find all entities" or "find entity by id"
+    */
     @GetMapping(path = "{email}/trustedStations")
-    public ResponseEntity<?> getTrustedStationsByEmail(@PathVariable String email) {
+    public ResponseEntity<?> getAllTrustedStationsByEmail(@PathVariable String email) {
         try {
             User user = userService.getUserByEmail(email);
             var trustedStations = user.getTrustedGasStations();
