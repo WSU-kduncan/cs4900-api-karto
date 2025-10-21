@@ -2,7 +2,6 @@ package com.karto.service.dto;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 import lombok.Data;
 

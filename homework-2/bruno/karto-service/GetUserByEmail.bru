@@ -1,0 +1,15 @@
+meta {
+  name: GetUserByEmail
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BASE_URL}}/user/alice.smith@example.test
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
