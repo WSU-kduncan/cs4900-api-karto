@@ -28,8 +28,12 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return new ResponseEntity<>(userDtoMapper.toDtoList(users), HttpStatus.OK);
+        try {
+            List<User> users = userService.getAllUsers();
+            return new ResponseEntity<>(userDtoMapper.toDtoList(users), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping(path = "{email}")

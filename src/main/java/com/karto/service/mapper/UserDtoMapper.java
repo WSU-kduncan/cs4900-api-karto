@@ -11,8 +11,11 @@ import com.karto.service.dto.UserDto;
 import com.karto.service.model.GasStation;
 import com.karto.service.model.User;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Mapper(componentModel = "spring")
 public interface UserDtoMapper {
+    User toEntity(UserDto userDto) throws EntityNotFoundException;
 
     @Mapping(source = "trustedGasStations", target = "trustedGasStationIds", qualifiedByName = "gasStationsToIds")
     UserDto toDto(User user);

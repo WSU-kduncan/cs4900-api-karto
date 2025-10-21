@@ -2,16 +2,18 @@ package com.karto.service.dto;
 
 import java.math.BigDecimal;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class GasStationDto {
-    private Integer id;
-    private BigDecimal longitude;
-    private BigDecimal latitude;
-    private String name;
-    private String addressLine;
-    private String city;
-    private String state;
-    private String zip;
+    Integer id;
+    BigDecimal longitude;
+    BigDecimal latitude;
+    String name;
+    String addressLine;
+    String city;
+    String state;
+    String zip;
 }
