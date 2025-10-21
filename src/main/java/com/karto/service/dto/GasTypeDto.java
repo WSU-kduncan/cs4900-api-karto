@@ -9,7 +9,7 @@ import lombok.Value;
 @Value
 public class GasTypeDto {
 
-    Integer id;
+  Integer id;
 
-    String name;
+  String name;
 }

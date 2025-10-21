@@ -1,7 +1,6 @@
 package com.karto.service.dto;
 
 import java.time.Year;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
@@ -11,19 +10,21 @@ import lombok.Value;
 @Value
 public class CarDto {
 
-    String vin;
+  String vin;
 
-    UserDto user;
+  Byte[] image;
 
-    String make;
+  String userEmail;
 
-    String model;
+  String make;
 
-    Year year;
+  String model;
 
-    String color;
+  Year year;
 
-    Integer mileage;
+  String color;
 
-    GasTypeDto gasType;
+  Integer mileage;
+
+  GasTypeDto gasType;
 }

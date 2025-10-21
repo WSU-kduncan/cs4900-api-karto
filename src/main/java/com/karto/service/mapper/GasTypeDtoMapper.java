@@ -1,21 +1,20 @@
 package com.karto.service.mapper;
 
-import java.util.List;
-
-import org.mapstruct.Mapper;
-
 import com.karto.service.dto.GasTypeDto;
 import com.karto.service.model.GasType;
-
+import com.karto.service.service.GasService;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+    componentModel = "spring",
+    uses = {GasService.class})
 public interface GasTypeDtoMapper {
 
-    GasType toEntity(GasTypeDto buildingDto) throws EntityNotFoundException;
+  GasType toEntity(GasTypeDto gasTypeDto) throws EntityNotFoundException;
 
-    GasTypeDto toDto(GasType building) throws EntityNotFoundException;
+  GasTypeDto toDto(GasType gasType) throws EntityNotFoundException;
 
-    List<GasTypeDto> toDtoList(List<GasType> gasTypeList) throws EntityNotFoundException;
-
+  List<GasTypeDto> toDtoList(List<GasType> gasTypeList) throws EntityNotFoundException;
 }
