@@ -3,8 +3,6 @@ package com.karto.service.mapper;
 import java.util.List;
 
 import com.karto.service.dto.GasPriceIdDto;
-import com.karto.service.model.GasPrice;
-import com.karto.service.dto.GasPriceDto;
 
 import com.karto.service.model.composite.GasPriceId;
 import com.karto.service.service.GasService;

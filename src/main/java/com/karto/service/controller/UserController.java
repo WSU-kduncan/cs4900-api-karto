@@ -2,6 +2,7 @@ package com.karto.service.controller;
 
 import java.util.List;
 
+import com.karto.service.mapper.UserDtoMapper;
 import com.karto.service.model.GasStation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.karto.service.dto.UserDto;
-import com.karto.service.mapper.UserMapper;
 import com.karto.service.model.User;
 import com.karto.service.service.UserService;
 
@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
     private final UserService userService;
-    private final UserMapper userMapper;
+    private final UserDtoMapper userMapper;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
@@ -55,11 +55,6 @@ public class UserController {
         }
     }
 
-    /*
-        Realistically, we can only do one controller method for finding trusted gas stations:
-        this is because `trustedGasStation` is not an entity in our JPA implementation.
-        Therefore, we cannot traditionally "find all entities" or "find entity by id"
-    */
     @GetMapping(path = "{email}/trustedStations")
     public ResponseEntity<?> getAllTrustedStationsByEmail(@PathVariable String email) {
         try {

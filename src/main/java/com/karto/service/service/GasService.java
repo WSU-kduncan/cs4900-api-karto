@@ -33,12 +33,14 @@ public class GasService {
             throw new EntityNotFoundException("Gas Station: ID " + id + " Not Found");
         return response.get();
     }
+
     public GasType  getGasTypeById(Integer id) {
         var response = gasTypeRepository.findById(id);
         if (response.isEmpty())
             throw new EntityNotFoundException("Gas Type: ID " + id + " Not Found");
         return response.get();
     }
+
     public GasPrice getGasPriceById(GasPriceId id) throws EntityNotFoundException {
         var response = gasPriceRepository.findById(id);
         if (response.isEmpty())
