@@ -1,6 +1,7 @@
 package com.karto.service.model;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -42,5 +43,5 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "station_id")
     )
     @ManyToMany
-    Set<GasStation> trustedGasStations;
+    List<GasStation> trustedGasStations;
 }
