@@ -22,5 +22,5 @@ public class CarImage {
   Car car;
 
   @Column(name = "car_image", columnDefinition = "MEDIUMBLOB", nullable = false)
-  Byte[] image;
+  byte[] image;
 }
