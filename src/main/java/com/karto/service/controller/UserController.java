@@ -2,6 +2,7 @@ package com.karto.service.controller;
 
 import java.util.List;
 
+import com.karto.service.model.GasStation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -64,6 +65,9 @@ public class UserController {
         try {
             User user = userService.getUserByEmail(email);
             var trustedStations = user.getTrustedGasStations();
+            for (GasStation gasStation : trustedStations) {
+                System.out.println(gasStation.getName());
+            }
             return ResponseEntity.ok(trustedStations);
         } catch (EntityNotFoundException enfe) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

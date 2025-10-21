@@ -27,24 +27,25 @@ public class GasController {
 
     private final GasPriceDtoMapper gasPriceDtoMapper;
 
-    @GetMapping("prices")
+    @GetMapping(path = "prices")
     ResponseEntity<List<GasPriceDto>> getAllGasPrices() {
-        return new ResponseEntity<>(gasPriceDtoMapper.toDtoList(gasService.getAllGasPrices()),
+        return new ResponseEntity<>(
+                gasPriceDtoMapper.toDtoList(gasService.getAllGasPrices()),
                 HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
-    ResponseEntity<GasPriceDto> getGasPriceById(@PathVariable Integer id) {
-        try {
-            var gasPrice = gasService.getGasPriceById(id);
-            return new ResponseEntity<>(gasPriceDtoMapper.toDto(gasPrice), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+//    @GetMapping(path = "price/{id}")
+//    ResponseEntity<GasPriceDto> getGasPriceById(@PathVariable Integer id) {
+//        try {
+//            var gasPrice = gasService.gasTy(id);
+//            return new ResponseEntity<>(gasPriceDtoMapper.toDto(gasPrice), HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
-    @GetMapping("type/{gasType}")
-    ResponseEntity<List<GasPriceDto>> getGasPriceByGasStation(@PathVariable String gasType) {
+    @GetMapping(path = "{gasType}")
+    ResponseEntity<List<GasPriceDto>> getGasPriceByGasType(@PathVariable String gasType) {
         return new ResponseEntity<>(
                 gasPriceDtoMapper.toDtoList(gasService.getGasPriceByGasType(gasType)),
                 HttpStatus.OK);

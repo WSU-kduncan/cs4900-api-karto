@@ -5,10 +5,11 @@ import java.util.List;
 import com.karto.service.model.GasPrice;
 import com.karto.service.dto.GasPriceDto;
 
+import com.karto.service.service.GasService;
 import org.mapstruct.Mapper;
 import jakarta.persistence.EntityNotFoundException;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { GasService.class })
 public interface GasPriceDtoMapper {
 
     GasPrice toEntity(GasPriceDto gasPriceDto) throws EntityNotFoundException;
