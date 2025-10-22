@@ -1,12 +1,12 @@
 meta {
-  name: Get All Gas Types
+  name: GetUserByUsername
   type: http
   seq: 2
 }
 
 get {
-  url: {{BASE_URL}}/gas/types
-  body: json
+  url: {{BASE_URL}}/user/username/alice_smith
+  body: none
   auth: inherit
 }
 

@@ -1,17 +1,13 @@
 meta {
-  name: Get Gas Price By Regular Gas Type
+  name: Get All Gas Prices
   type: http
-  seq: 3
+  seq: 5
 }
 
 get {
-  url: {{BASE_URL}}/gas/:gasType
+  url: {{BASE_URL}}/gas/prices
   body: none
   auth: inherit
-}
-
-params:path {
-  gasType: Regular
 }
 
 headers {
@@ -20,4 +16,5 @@ headers {
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

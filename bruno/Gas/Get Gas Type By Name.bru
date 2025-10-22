@@ -1,17 +1,17 @@
 meta {
-  name: GetMaintenanceById
+  name: Get Gas Type By Name
   type: http
-  seq: 2
+  seq: 5
 }
 
 get {
-  url: {{BASE_URL}}/maintenance/:id
+  url: {{BASE_URL}}/gas/types/name/:name
   body: json
   auth: inherit
 }
 
 params:path {
-  id: 2
+  name: Biodiesel
 }
 
 settings {
