@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class MaintenanceItemDetailIdDto {
-    Integer maintenanceId;
+  Integer maintenanceId;
 
-    MaintenanceTypeDescriptionDto maintenanceType;
+  MaintenanceTypeDescriptionDto maintenanceType;
 }

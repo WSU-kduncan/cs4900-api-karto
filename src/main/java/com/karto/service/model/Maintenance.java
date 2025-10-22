@@ -13,7 +13,6 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
-
 import lombok.Data;
 
 @Entity
@@ -43,5 +42,4 @@ public class Maintenance {
 
   @OneToOne(mappedBy = "maintenance")
   MaintenanceReceipt receipt;
-
 }
