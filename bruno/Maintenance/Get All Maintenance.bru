@@ -1,12 +1,12 @@
 meta {
-  name: GetGasStationById
+  name: Get All Maintenance
   type: http
-  seq: 10
+  seq: 4
 }
 
 get {
-  url: {{BASE_URL}}/gasstation/1
-  body: none
+  url: {{BASE_URL}}/maintenance/all
+  body: json
   auth: inherit
 }
 

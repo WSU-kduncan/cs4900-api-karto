@@ -1,17 +1,13 @@
 meta {
-  name: GetMaintenanceById
+  name: Get All Users
   type: http
-  seq: 7
+  seq: 3
 }
 
 get {
-  url: {{BASE_URL}}/maintenance/:id
+  url: {{BASE_URL}}/user
   body: json
   auth: inherit
-}
-
-params:path {
-  id: 2
 }
 
 settings {
