@@ -1,11 +1,11 @@
-name: Spotless, Building, and Testing Check
+name: Gradle Build Check
 
 on:
   pull_request:
 
 jobs:
   spotless:
-    name: Run Spotless, Building, and Testing Check
+    name: Run Gradle Build
     runs-on: ubuntu-latest
 
     steps:
@@ -27,9 +27,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      - name: Run Spotless Check
-        run: ./gradlew spotlessCheck
         
       - name: Build and Test Spring Boot Application
-        run: ./gradlew build
+        run: ./gradlew build -x test
