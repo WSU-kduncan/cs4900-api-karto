@@ -3,7 +3,7 @@ package com.karto.service.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.karto.service.model.GasStation;
+import com.karto.service.model.TrustedGasStation;
 import com.karto.service.repository.TrustedGasStationRepository;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +41,8 @@ public class UserService {
         return user.get();
     }
 
-    public List<GasStation> getGasStationByUser(User user) {
-        var trustedGasStations = trustedGasStationRepository.findByUser(user);
-        return trustedGasStations.stream().map(g -> g.getGasStation()).toList();
+    public List<TrustedGasStation> getGasStationByUser(User user) {
+        return trustedGasStationRepository.findByUser(user);
+        // return trustedGasStations.stream().map(g -> g.getGasStation()).toList();
     }
 }
