@@ -8,7 +8,6 @@ import com.karto.service.repository.GasPriceRepository;
 import com.karto.service.repository.GasStationRepository;
 import com.karto.service.repository.GasTypeRepository;
 import com.karto.service.repository.TrustedGasStationRepository;
-
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -70,11 +69,12 @@ public class GasService {
     return gasPriceRepository.findById_GasType_Name(gasType);
   }
 
-  public GasPrice getGasPriceById(GasStation gasStation, GasType gasType) throws EntityNotFoundException {
+  public GasPrice getGasPriceById(GasStation gasStation, GasType gasType)
+      throws EntityNotFoundException {
     var response = gasPriceRepository.findByIdStationAndIdGasType(gasStation, gasType);
     if (response.isEmpty())
-      throw new EntityNotFoundException(
-          "Gas Price: Station " + gasStation.getId() + " or Type: " + gasType.getId() + " Not Found");
+      throw new EntityNotFoundException("Gas Price: Station " + gasStation.getId() + " or Type: "
+          + gasType.getId() + " Not Found");
     return response.get();
   }
 }
