@@ -30,3 +30,6 @@ jobs:
 
       - name: Run Spotless Check
         run: ./gradlew spotlessCheck
+        
+      - name: Build and Test Spring Boot Application
+        run: ./gradlew build
