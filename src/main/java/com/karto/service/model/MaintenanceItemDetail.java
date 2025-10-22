@@ -1,7 +1,6 @@
 package com.karto.service.model;
 
 import com.karto.service.model.composite.MaintenanceItemDetailId;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -12,12 +11,12 @@ import lombok.Data;
 @Data
 @Table(name = "maintenance_item_detail")
 public class MaintenanceItemDetail {
-    @EmbeddedId
-    MaintenanceItemDetailId id;
+  @EmbeddedId
+  MaintenanceItemDetailId id;
 
-    @Column(name = "quantity", columnDefinition = "TINYINT UNSIGNED", nullable = false)
-    Integer quantity;
-    
-    @Column(name = "comments", length = 255)
-    String comments;
+  @Column(name = "quantity", columnDefinition = "TINYINT UNSIGNED", nullable = false)
+  Integer quantity;
+
+  @Column(name = "comments", length = 255)
+  String comments;
 }

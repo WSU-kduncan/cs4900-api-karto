@@ -6,6 +6,6 @@ import lombok.Data;
 @Builder
 @Data
 public class MaintenanceTypeDescriptionDto {
-    Integer id;
-    String name;
+  Integer id;
+  String name;
 }

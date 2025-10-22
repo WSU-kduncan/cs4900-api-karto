@@ -1,20 +1,19 @@
 package com.karto.service.dto;
 
+import java.math.BigDecimal;
+import java.time.Instant;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
-
-import java.math.BigDecimal;
-import java.time.Instant;
 
 @Builder
 @Data
 @Value
 public class GasPriceDto {
 
-    GasPriceIdDto id;
+  GasPriceIdDto id;
 
-    BigDecimal price;
+  BigDecimal price;
 
-    Instant updated;
+  Instant updated;
 }

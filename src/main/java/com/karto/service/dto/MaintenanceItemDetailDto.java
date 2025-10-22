@@ -6,9 +6,9 @@ import lombok.Data;
 @Builder
 @Data
 public class MaintenanceItemDetailDto {
-    Integer quantity;
+  Integer quantity;
 
-    String comments;
+  String comments;
 
-    MaintenanceItemDetailIdDto id;
+  MaintenanceItemDetailIdDto id;
 }
