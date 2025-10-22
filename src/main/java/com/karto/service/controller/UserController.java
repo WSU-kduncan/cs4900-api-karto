@@ -3,7 +3,7 @@ package com.karto.service.controller;
 import java.util.List;
 
 import com.karto.service.mapper.UserDtoMapper;
-import com.karto.service.model.GasStation;
+import com.karto.service.model.TrustedGasStation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @GetMapping(path = "{email}/trustedStations")
-    public ResponseEntity<List<GasStation>> getTrustedGasStationsByUser(@PathVariable String email) {
+    public ResponseEntity<List<TrustedGasStation>> getTrustedGasStationsByUser(@PathVariable String email) {
         try {
             User user = userService.getUserByEmail(email);
             return new ResponseEntity<>(userService.getGasStationByUser(user), HttpStatus.OK);

@@ -6,7 +6,6 @@ import com.karto.service.dto.GasPriceDto;
 import com.karto.service.mapper.GasPriceDtoMapper;
 import com.karto.service.model.GasStation;
 import com.karto.service.model.GasType;
-import com.karto.service.model.User;
 import com.karto.service.service.GasService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -61,18 +60,6 @@ public class GasController {
                     gasPriceDtoMapper.toDtoList(gasService.getGasPriceByGasType(gasType)),
                     HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping(path = "station/{stationId}/users")
-    ResponseEntity<List<User>> getUsersByTrustedGasStation(@PathVariable Integer stationId) {
-        try {
-            GasStation gasStation = gasService.getGasStationById(stationId);
-            return new ResponseEntity<>(
-                    gasService.getUsersByGasStation(gasStation),
-                    HttpStatus.OK);
-        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

@@ -1,9 +1,6 @@
 package com.karto.service.service;
 
-import com.karto.service.model.GasPrice;
-import com.karto.service.model.GasStation;
-import com.karto.service.model.GasType;
-import com.karto.service.model.User;
+import com.karto.service.model.*;
 import com.karto.service.repository.GasPriceRepository;
 
 import com.karto.service.repository.GasStationRepository;
@@ -55,7 +52,7 @@ public class GasService {
         return gasPriceRepository.findById_GasType_Name(gasType);
     }
 
-    public List<User> getUsersByGasStation(GasStation gasStation) {
-        return trustedGasStationRepository.findByGasStation(gasStation);
+    public List<User> getUsersByTrustedGasStation(GasStation trustedGasStation) {
+        return trustedGasStationRepository.findByGasStation(trustedGasStation);
     }
 }
