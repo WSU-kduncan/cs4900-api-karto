@@ -1,0 +1,15 @@
+meta {
+  name: GetUserByUsername
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{BASE_URL}}/user/username/alice_smith
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

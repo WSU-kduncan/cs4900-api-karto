@@ -1,0 +1,23 @@
+meta {
+  name: Get Gas Price By Diesel Gas Type
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{BASE_URL}}/gas/:gasType
+  body: none
+  auth: inherit
+}
+
+params:path {
+  gasType: Diesel
+}
+
+headers {
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+}
