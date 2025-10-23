@@ -1,8 +1,9 @@
 package com.karto.service.service;
 
+import com.karto.service.dto.MaintenanceDto;
+import com.karto.service.mapper.MaintenanceDtoMapper;
 import com.karto.service.model.Maintenance;
 import com.karto.service.model.MaintenanceReceipt;
-import com.karto.service.repository.MaintenanceReceiptRepository;
 import com.karto.service.repository.MaintenanceRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class MaintenanceService {
   private final MaintenanceRepository maintenanceRepository;
 
-  private final MaintenanceReceiptRepository receiptRepository;
+  private final MaintenanceDtoMapper maintenanceDtoMapper;
 
   public Maintenance getMaintenanceById(Integer id) throws EntityNotFoundException {
     var response = maintenanceRepository.findById(id);
@@ -29,10 +30,5 @@ public class MaintenanceService {
 
   public List<Maintenance> getAllMaintenanceByCar(String carVin) {
     return maintenanceRepository.findByCarVinOrderByDateDesc(carVin);
-  }
-
-  public MaintenanceReceipt getMaintenanceReceiptById(Integer id) {
-    var response = receiptRepository.findById(id);
-    return response.orElse(null);
   }
 }

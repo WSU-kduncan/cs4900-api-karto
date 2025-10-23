@@ -19,7 +19,7 @@ public class MaintenanceDto {
 
   BigDecimal cost;
 
-  Byte[] receipt;
+  byte[] receipt;
 
   List<MaintenanceItemDetailDto> itemDetails;
 }
