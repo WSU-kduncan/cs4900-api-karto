@@ -9,7 +9,7 @@ import lombok.Value;
 @Value
 public class GasPriceIdDto {
 
-    Integer gasStationId;
+  Integer gasStationId;
 
-    Integer gasTypeId;
+  Integer gasTypeId;
 }

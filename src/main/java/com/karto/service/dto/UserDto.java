@@ -2,7 +2,6 @@ package com.karto.service.dto;
 
 import java.time.Instant;
 import java.util.Set;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
@@ -12,13 +11,13 @@ import lombok.Value;
 @Value
 public class UserDto {
 
-    String email;
+  String email;
 
-    String username;
+  String username;
 
-    String password;
+  String password;
 
-    Instant createdAt;
+  Instant createdAt;
 
-    Set<GasStationDto> trustedGasStations;
+  Set<GasStationDto> trustedGasStations;
 }
