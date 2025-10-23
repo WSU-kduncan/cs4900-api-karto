@@ -1,7 +1,12 @@
 package com.karto.service.controller;
 
+import com.karto.service.dto.GasStationDto;
+import com.karto.service.mapper.GasStationMapper;
+import com.karto.service.model.GasStation;
+import com.karto.service.service.GasStationService;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,44 +15,36 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.karto.service.dto.GasStationDto;
-import com.karto.service.mapper.GasStationMapper;
-import com.karto.service.model.GasStation;
-import com.karto.service.service.GasStationService;
-
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-
 @RestController
 @RequestMapping(path = "gasstation", produces = MediaType.APPLICATION_JSON_VALUE) // Base path
 @RequiredArgsConstructor
 public class GasStationController {
 
-    private final GasStationService gasStationService;
-    private final GasStationMapper gasStationMapper;
+  private final GasStationService gasStationService;
+  private final GasStationMapper gasStationMapper;
 
-    @GetMapping
-    public ResponseEntity<List<GasStationDto>> getAllGasStations() {
-        List<GasStation> stations = gasStationService.getAllGasStations();
-        return new ResponseEntity<>(gasStationMapper.toDtoList(stations), HttpStatus.OK);
-    }
+  @GetMapping
+  public ResponseEntity<List<GasStationDto>> getAllGasStations() {
+    List<GasStation> stations = gasStationService.getAllGasStations();
+    return new ResponseEntity<>(gasStationMapper.toDtoList(stations), HttpStatus.OK);
+  }
 
-    @GetMapping(path = "{id}")
-    public ResponseEntity<GasStationDto> getGasStationById(@PathVariable Integer id) {
-        try {
-            GasStation station = gasStationService.getGasStationById(id);
-            return new ResponseEntity<>(gasStationMapper.toDto(station), HttpStatus.OK);
-        } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+  @GetMapping(path = "{id}")
+  public ResponseEntity<GasStationDto> getGasStationById(@PathVariable Integer id) {
+    try {
+      GasStation station = gasStationService.getGasStationById(id);
+      return new ResponseEntity<>(gasStationMapper.toDto(station), HttpStatus.OK);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+  }
 
-    @GetMapping(path = "search/{name}")
-    public ResponseEntity<List<GasStationDto>> findGasStationsByName(@PathVariable String name) {
-        List<GasStation> stations = gasStationService.findGasStationsByName(name);
-        if (stations.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(gasStationMapper.toDtoList(stations), HttpStatus.OK);
+  @GetMapping(path = "search/{name}")
+  public ResponseEntity<List<GasStationDto>> findGasStationsByName(@PathVariable String name) {
+    List<GasStation> stations = gasStationService.findGasStationsByName(name);
+    if (stations.isEmpty()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    return new ResponseEntity<>(gasStationMapper.toDtoList(stations), HttpStatus.OK);
+  }
 }

@@ -13,14 +13,14 @@ import lombok.Data;
 @Entity
 @Data
 public class MaintenanceReceipt {
-    @Id
-    Integer maintenanceId;
+  @Id
+  Integer maintenanceId;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "maintenance_id", nullable = false)
-    Maintenance maintenance;
+  @OneToOne
+  @MapsId
+  @JoinColumn(name = "maintenance_id", nullable = false)
+  Maintenance maintenance;
 
-    @Column(name = "receipt_image", columnDefinition = "MEDIUMBLOB", nullable = false)
-    byte[] receipt;
+  @Column(name = "receipt_image", columnDefinition = "MEDIUMBLOB", nullable = false)
+  byte[] receipt;
 }
