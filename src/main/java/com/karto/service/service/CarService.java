@@ -1,5 +1,7 @@
 package com.karto.service.service;
 
+import com.karto.service.dto.CarDto;
+import com.karto.service.mapper.CarDtoMapper;
 import com.karto.service.model.Car;
 import com.karto.service.model.CarImage;
 import com.karto.service.repository.CarImageRepository;
@@ -17,6 +19,8 @@ public class CarService {
   private final CarRepository carRepository;
 
   private final CarImageRepository carImageRepository;
+
+  private final CarDtoMapper carDtoMapper;
 
   public List<Car> getAllCars() throws EntityNotFoundException {
     return carRepository.findAll();
@@ -36,6 +40,17 @@ public class CarService {
     return response.get();
   }
 
+  public Car putCar(String vin, CarDto carDto) throws EntityNotFoundException {
+    Car existingCar = carRepository
+        .findById(vin)
+        .orElseThrow(() -> new EntityNotFoundException("Car with vin " + vin + " not found."));
+
+    return carRepository.saveAndFlush(carDtoMapper.updateEntity(carDto, existingCar));
+  }
+
+  /**
+   * Car Image Service
+   */
   public List<CarImage> getAllCarImages() throws EntityNotFoundException {
     return carImageRepository.findAll();
   }

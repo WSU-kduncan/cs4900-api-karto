@@ -1,0 +1,40 @@
+meta {
+  name: Update Car Detail by Vin
+  type: http
+  seq: 1
+}
+
+put {
+  url: {{BASE_URL}}/cars/:vin
+  body: json
+  auth: inherit
+}
+
+params:path {
+  vin: 1FTFW1EF1EKD56789
+}
+
+body:json {
+  {
+    "vin": "1FTFW1EF1EKD56789",
+    "image": [
+        56
+    ],
+    "userEmail": "carla89@example.test",
+    "make": "Ford",
+    "model": "F-150",
+    "year": "2012",
+    "color": "Blue",
+    "mileage": 95800,
+    "gasType": {
+      "id": 7,
+      "name": "Natural"
+    }
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
