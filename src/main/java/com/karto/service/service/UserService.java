@@ -43,6 +43,5 @@ public class UserService {
 
     public List<TrustedGasStation> getGasStationByUser(User user) {
         return trustedGasStationRepository.findByUser(user);
-        // return trustedGasStations.stream().map(g -> g.getGasStation()).toList();
     }
 }

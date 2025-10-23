@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class GasService {
+
     private final GasPriceRepository gasPriceRepository;
 
     private final GasStationRepository gasStationRepository;
