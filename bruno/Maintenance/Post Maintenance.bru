@@ -1,0 +1,62 @@
+meta {
+  name: Post Maintenance
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{BASE_URL}}/maintenance
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "id": 1,
+    "carVin": "1HGCM82633A004352",
+    "date": "2025-06-15T00:00:08Z",
+    "mileage": 63500,
+    "cost": 89.99,
+    "receipt": "MQ==",
+    "itemDetails": [
+      {
+        "quantity": 7,
+        "comments": null,
+        "id": {
+          "maintenanceId": 0,
+          "maintenanceType": {
+            "id": 1,
+            "name": "Oil Change"
+          }
+        }
+      },
+      {
+        "quantity": 9,
+        "comments": null,
+        "id": {
+          "maintenanceId": 0,
+          "maintenanceType": {
+            "id": 3,
+            "name": "Battery Replacement"
+          }
+        }
+      },
+      {
+        "quantity": 9,
+        "comments": null,
+        "id": {
+          "maintenanceId": 0,
+          "maintenanceType": {
+            "id": 8,
+            "name": "Coolant Flush & Radiator Service"
+          }
+        }
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -8,8 +8,9 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = { MaintenanceItemDetailDtoMapper.class, CarService.class
-})
+@Mapper(
+    componentModel = "spring",
+    uses = {MaintenanceItemDetailDtoMapper.class, CarService.class})
 public interface MaintenanceDtoMapper {
   @Mapping(source = "carVin", target = "car")
   @Mapping(source = "id", target = "receipt.maintenanceId")

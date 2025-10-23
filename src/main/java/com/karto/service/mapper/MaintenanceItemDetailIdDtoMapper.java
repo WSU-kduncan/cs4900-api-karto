@@ -7,7 +7,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = { MaintenanceHelperMapper.class })
+@Mapper(
+    componentModel = "spring",
+    uses = {MaintenanceHelperMapper.class})
 public interface MaintenanceItemDetailIdDtoMapper {
   @Mapping(target = "maintenanceId", source = "maintenance.id")
   MaintenanceItemDetailIdDto toDto(MaintenanceItemDetailId id) throws EntityNotFoundException;

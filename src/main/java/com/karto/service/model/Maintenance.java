@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -26,6 +27,7 @@ public class Maintenance {
 
   @JoinColumn(name = "car_vin", nullable = false)
   @ManyToOne
+  @ToString.Exclude
   Car car;
 
   @Column(name = "maintenance_datetime", nullable = false)
@@ -40,6 +42,6 @@ public class Maintenance {
   @OneToMany(mappedBy = "id.maintenance")
   List<MaintenanceItemDetail> itemDetails;
 
-  @OneToOne(mappedBy = "maintenance")
+  @OneToOne(mappedBy = "maintenance", optional = true)
   MaintenanceReceipt receipt;
 }
