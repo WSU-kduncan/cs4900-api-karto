@@ -1,15 +1,16 @@
 meta {
-  name: GetAllUsers
+  name: Get All Gas Types
   type: http
-  seq: 1
+  seq: 5
 }
 
 get {
-  url: {{BASE_URL}}/user
+  url: {{BASE_URL}}/gas/types
   body: json
   auth: inherit
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

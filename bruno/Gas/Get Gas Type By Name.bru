@@ -1,17 +1,17 @@
 meta {
-  name: Get All Cars Owned By
+  name: Get Gas Type By Name
   type: http
-  seq: 3
+  seq: 5
 }
 
 get {
-  url: {{BASE_URL}}/cars/ownedBy/:ownerEmail
+  url: {{BASE_URL}}/gas/types/name/:name
   body: json
   auth: inherit
 }
 
 params:path {
-  ownerEmail: irene.z@example.test
+  name: Biodiesel
 }
 
 settings {

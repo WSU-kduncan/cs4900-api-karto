@@ -1,12 +1,12 @@
 meta {
-  name: Get All Cars
+  name: Get User By Email
   type: http
   seq: 1
 }
 
 get {
-  url: {{BASE_URL}}/cars
-  body: json
+  url: {{BASE_URL}}/user/alice.smith@example.test
+  body: none
   auth: inherit
 }
 
