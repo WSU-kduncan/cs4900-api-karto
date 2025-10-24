@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(
     componentModel = "spring",
@@ -18,6 +19,11 @@ public interface MaintenanceDtoMapper {
   @Mapping(source = "car.vin", target = "carVin")
   @Mapping(source = "receipt.receipt", target = "receipt")
   MaintenanceDto toDto(Maintenance maintenance) throws EntityNotFoundException;
+
+  @Mapping(source = "receipt", target = "receipt.receipt")
+  @Mapping(source = "carVin", target = "car.vin")
+  @Mapping(target = "id", ignore = true)
+  void updateEntity(MaintenanceDto maintenanceDto, @MappingTarget Maintenance maintenance);
 
   List<MaintenanceDto> toDtoList(List<Maintenance> maintenances);
 }

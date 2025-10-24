@@ -53,4 +53,12 @@ public class MaintenanceService {
 
     return savedMaintenance;
   }
+
+  public Maintenance putMaintenance(Integer id, MaintenanceDto maintenanceDto) {
+    var maintenanceEntity = maintenanceRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Maintenance: ID " + id + " Not Found"));
+    maintenanceDtoMapper.updateEntity(maintenanceDto, maintenanceEntity);
+    var savedMaintenance = maintenanceRepository.saveAndFlush(maintenanceEntity);
+    return savedMaintenance;
+  }
 }

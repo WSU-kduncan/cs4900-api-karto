@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +55,17 @@ public class MaintenanceController {
   ResponseEntity<Object> postMaintenance(@RequestBody MaintenanceDto maintenanceDto) {
     try {
       var maintenance = maintenanceService.createMaintenance(maintenanceDto);
+      return new ResponseEntity<>(maintenanceDtoMapper.toDto(maintenance), HttpStatus.CREATED);
+    } catch (EntityNotFoundException e) {
+      return ResponseEntity.badRequest().body(e.getLocalizedMessage());
+    }
+  }
+
+  @PutMapping("{id}")
+  ResponseEntity<Object> putMaintenance(
+      @PathVariable Integer id, @RequestBody MaintenanceDto maintenanceDto) {
+    try {
+      var maintenance = maintenanceService.putMaintenance(id, maintenanceDto);
       return new ResponseEntity<>(maintenanceDtoMapper.toDto(maintenance), HttpStatus.CREATED);
     } catch (EntityNotFoundException e) {
       return ResponseEntity.badRequest().body(e.getLocalizedMessage());
