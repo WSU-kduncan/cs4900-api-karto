@@ -1,5 +1,6 @@
 package com.karto.service.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,9 +40,9 @@ public class Maintenance {
   @Column(name = "cost", columnDefinition = "DECIMAL(7,4) UNSIGNED")
   BigDecimal cost;
 
-  @OneToMany(mappedBy = "id.maintenance")
+  @OneToMany(mappedBy = "id.maintenance", cascade = CascadeType.ALL)
   List<MaintenanceItemDetail> itemDetails;
 
-  @OneToOne(mappedBy = "maintenance", optional = true)
+  @OneToOne(mappedBy = "maintenance", cascade = CascadeType.ALL)
   MaintenanceReceipt receipt;
 }

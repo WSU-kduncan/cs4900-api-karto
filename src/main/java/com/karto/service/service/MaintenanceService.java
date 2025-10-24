@@ -45,28 +45,18 @@ public class MaintenanceService {
 
   public Maintenance createMaintenance(MaintenanceDto maintenanceDto) {
     maintenanceDto.setId(null);
-    var maintenanceItemDetails = maintenanceDto.getItemDetails();
-    maintenanceDto.setItemDetails(null);
-
-    var maintenanceReceipt = maintenanceDto.getReceipt();
-    maintenanceDto.setReceipt(null);
-
+    System.out.println(maintenanceDto);
     var maintenanceEntity = maintenanceDtoMapper.toEntity(maintenanceDto);
-    maintenanceEntity.setReceipt(null);
+    if (maintenanceDto.getReceipt() != null) {
+      var receiptEntity = maintenanceEntity.getReceipt();
+      receiptEntity.setMaintenance(maintenanceEntity);
+    }
+    var maintenanceItemDetailEntities = maintenanceEntity.getItemDetails();
+    maintenanceItemDetailEntities.forEach(m -> {
+      m.getId().setMaintenance(maintenanceEntity);
+    });
+    var savedMaintenance = maintenanceRepository.saveAndFlush(maintenanceEntity);
 
-    var savedMaintenance = maintenanceRepository.save(maintenanceEntity);
-    var maintenanceReceiptEntity =
-        maintenanceReceiptDtoMapper.toEntity(savedMaintenance, maintenanceReceipt);
-    maintenanceReceiptRepository.save(maintenanceReceiptEntity);
-
-    maintenanceItemDetails.forEach(m -> m.getId().setMaintenanceId(savedMaintenance.getId()));
-    var maintenanceItemDetailEntities =
-        maintenanceItemDetailDtoMapper.toEntityList(maintenanceItemDetails);
-    maintenanceItemDetailRepostiry.saveAll(maintenanceItemDetailEntities);
-
-    maintenanceItemDetailRepostiry.flush();
-    maintenanceReceiptRepository.flush();
-    maintenanceRepository.flush();
     return savedMaintenance;
   }
 }

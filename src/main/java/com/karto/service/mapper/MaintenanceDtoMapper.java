@@ -13,7 +13,7 @@ import org.mapstruct.Mapping;
     uses = {MaintenanceItemDetailDtoMapper.class, CarService.class})
 public interface MaintenanceDtoMapper {
   @Mapping(source = "carVin", target = "car")
-  @Mapping(source = "id", target = "receipt.maintenanceId")
+  @Mapping(source = "receipt", target = "receipt.receipt")
   Maintenance toEntity(MaintenanceDto maintenanceDto) throws EntityNotFoundException;
 
   @Mapping(source = "car.vin", target = "carVin")

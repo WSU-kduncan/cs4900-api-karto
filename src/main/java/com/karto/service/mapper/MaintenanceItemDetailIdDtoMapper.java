@@ -14,6 +14,6 @@ public interface MaintenanceItemDetailIdDtoMapper {
   @Mapping(target = "maintenanceId", source = "maintenance.id")
   MaintenanceItemDetailIdDto toDto(MaintenanceItemDetailId id) throws EntityNotFoundException;
 
-  @Mapping(target = "maintenance", source = "maintenanceId")
+  @Mapping(target = "maintenance", source = "maintenanceId", conditionExpression = "java(id.getMaintenanceId() != null)")
   MaintenanceItemDetailId toEntity(MaintenanceItemDetailIdDto id) throws EntityNotFoundException;
 }

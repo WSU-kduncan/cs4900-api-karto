@@ -8,6 +8,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Table(name = "maintenance_receipt")
 @Entity
@@ -19,6 +20,7 @@ public class MaintenanceReceipt {
   @OneToOne
   @MapsId
   @JoinColumn(name = "maintenance_id", nullable = false)
+  @EqualsAndHashCode.Exclude
   Maintenance maintenance;
 
   @Column(name = "receipt_image", columnDefinition = "MEDIUMBLOB", nullable = false)
