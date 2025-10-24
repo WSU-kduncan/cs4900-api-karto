@@ -16,5 +16,6 @@ public interface MaintenanceItemDetailIdDtoMapper {
   MaintenanceItemDetailId toEntity(MaintenanceItemDetailIdDto id) throws EntityNotFoundException;
 
   @Mapping(target = "maintenance.id", source = "maintenanceId")
-  void updateEntity(MaintenanceItemDetailIdDto detailIdDto, @MappingTarget MaintenanceItemDetailId id);
+  void updateEntity(
+      MaintenanceItemDetailIdDto detailIdDto, @MappingTarget MaintenanceItemDetailId id);
 }

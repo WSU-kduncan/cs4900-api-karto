@@ -7,6 +7,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Embeddable
 @Data
@@ -18,5 +19,6 @@ public class MaintenanceItemDetailId {
   @EqualsAndHashCode.Exclude
   @JoinColumn(name = "maintenance_id", nullable = false)
   @ManyToOne
+  @ToString.Exclude
   Maintenance maintenance;
 }

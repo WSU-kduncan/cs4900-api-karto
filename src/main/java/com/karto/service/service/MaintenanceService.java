@@ -35,14 +35,6 @@ public class MaintenanceService {
   public Maintenance createMaintenance(MaintenanceDto maintenanceDto) {
     maintenanceDto.setId(null);
     var maintenanceEntity = maintenanceDtoMapper.toEntity(maintenanceDto);
-    if (maintenanceDto.getReceipt() != null) {
-      var receiptEntity = maintenanceEntity.getReceipt();
-      receiptEntity.setMaintenance(maintenanceEntity);
-    }
-    var maintenanceItemDetailEntities = maintenanceEntity.getItemDetails();
-    maintenanceItemDetailEntities.forEach(m -> {
-      m.getId().setMaintenance(maintenanceEntity);
-    });
     Maintenance savedMaintenance;
 
     try {
@@ -55,7 +47,8 @@ public class MaintenanceService {
   }
 
   public Maintenance putMaintenance(Integer id, MaintenanceDto maintenanceDto) {
-    var maintenanceEntity = maintenanceRepository.findById(id)
+    var maintenanceEntity = maintenanceRepository
+        .findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Maintenance: ID " + id + " Not Found"));
     maintenanceDtoMapper.updateEntity(maintenanceDto, maintenanceEntity);
     var savedMaintenance = maintenanceRepository.saveAndFlush(maintenanceEntity);

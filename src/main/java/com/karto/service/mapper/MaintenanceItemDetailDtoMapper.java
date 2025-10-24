@@ -19,6 +19,7 @@ public interface MaintenanceItemDetailDtoMapper {
 
   List<MaintenanceItemDetail> toEntityList(List<MaintenanceItemDetailDto> maintenanceItemDetails);
 
-  void updateEntity(MaintenanceItemDetailDto maintenanceItemDetailDto, @MappingTarget MaintenanceItemDetail maintenanceItemDetail);
-
+  void updateEntity(
+      MaintenanceItemDetailDto maintenanceItemDetailDto,
+      @MappingTarget MaintenanceItemDetail maintenanceItemDetail);
 }

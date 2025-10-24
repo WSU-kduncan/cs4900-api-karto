@@ -43,6 +43,6 @@ public class Maintenance {
   @OneToMany(mappedBy = "id.maintenance", cascade = CascadeType.ALL)
   List<MaintenanceItemDetail> itemDetails;
 
-  @OneToOne(mappedBy = "maintenance", cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "maintenance", cascade = CascadeType.ALL, orphanRemoval = true)
   MaintenanceReceipt receipt;
 }
