@@ -7,6 +7,7 @@ import com.karto.service.repository.MaintenanceRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +34,6 @@ public class MaintenanceService {
 
   public Maintenance createMaintenance(MaintenanceDto maintenanceDto) {
     maintenanceDto.setId(null);
-    System.out.println(maintenanceDto);
     var maintenanceEntity = maintenanceDtoMapper.toEntity(maintenanceDto);
     if (maintenanceDto.getReceipt() != null) {
       var receiptEntity = maintenanceEntity.getReceipt();
@@ -43,7 +43,13 @@ public class MaintenanceService {
     maintenanceItemDetailEntities.forEach(m -> {
       m.getId().setMaintenance(maintenanceEntity);
     });
-    var savedMaintenance = maintenanceRepository.saveAndFlush(maintenanceEntity);
+    Maintenance savedMaintenance;
+
+    try {
+      savedMaintenance = maintenanceRepository.saveAndFlush(maintenanceEntity);
+    } catch (DataIntegrityViolationException e) {
+      throw new EntityNotFoundException("Duplicate Entry");
+    }
 
     return savedMaintenance;
   }
