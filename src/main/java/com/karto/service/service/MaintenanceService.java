@@ -2,11 +2,7 @@ package com.karto.service.service;
 
 import com.karto.service.dto.MaintenanceDto;
 import com.karto.service.mapper.MaintenanceDtoMapper;
-import com.karto.service.mapper.MaintenanceItemDetailDtoMapper;
-import com.karto.service.mapper.MaintenanceReceiptDtoMapper;
 import com.karto.service.model.Maintenance;
-import com.karto.service.repository.MaintenanceItemDetailRepostiry;
-import com.karto.service.repository.MaintenanceReceiptRepository;
 import com.karto.service.repository.MaintenanceRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -17,14 +13,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MaintenanceService {
   private final MaintenanceRepository maintenanceRepository;
-
-  private final MaintenanceItemDetailRepostiry maintenanceItemDetailRepostiry;
-
-  private final MaintenanceItemDetailDtoMapper maintenanceItemDetailDtoMapper;
-
-  private final MaintenanceReceiptDtoMapper maintenanceReceiptDtoMapper;
-
-  private final MaintenanceReceiptRepository maintenanceReceiptRepository;
 
   private final MaintenanceDtoMapper maintenanceDtoMapper;
 
