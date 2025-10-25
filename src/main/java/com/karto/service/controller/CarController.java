@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,5 +58,18 @@ public class CarController {
     }
 
     return new ResponseEntity<>(carDtoMapper.toDto(car), HttpStatus.OK);
+  }
+
+  @PostMapping
+  ResponseEntity<Object> addCar(@RequestBody CarDto carDto) {
+    Car car;
+
+    try {
+      car = carService.createNewCar(carDto);
+      
+      return new ResponseEntity<>(carDtoMapper.toDto(car), HttpStatus.CREATED);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
 }

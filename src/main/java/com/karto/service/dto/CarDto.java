@@ -3,11 +3,9 @@ package com.karto.service.dto;
 import java.time.Year;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Value;
 
 @Builder
 @Data
-@Value
 public class CarDto {
 
   String vin;
@@ -26,5 +24,5 @@ public class CarDto {
 
   Integer mileage;
 
-  GasTypeDto gasType;
+  Integer gasTypeId;
 }

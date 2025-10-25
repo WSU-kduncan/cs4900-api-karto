@@ -16,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,16 +39,6 @@ public class GasController {
         gasTypeDtoMapper.toDtoList(gasService.getAllGasTypes()), HttpStatus.OK);
   }
 
-  @GetMapping(path = "prices")
-  ResponseEntity<List<GasPriceDto>> getAllGasPrices() {
-    try {
-      return new ResponseEntity<>(
-          gasPriceDtoMapper.toDtoList(gasService.getAllGasPrices()), HttpStatus.OK);
-    } catch (EntityNotFoundException e) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-  }
-
   @GetMapping("types/{id}")
   ResponseEntity<GasTypeDto> getGasTypeById(@PathVariable Integer id) {
     return new ResponseEntity<>(
@@ -59,6 +51,38 @@ public class GasController {
         gasTypeDtoMapper.toDto(gasService.getGasTypeByName(name)), HttpStatus.OK);
   }
 
+  @PostMapping("types")
+  ResponseEntity<Object> createGasType(@RequestBody GasTypeDto gasTypeDto) {
+    GasType gasType;
+
+    try {
+      gasType = gasService.createGasType(gasTypeDto);
+
+      return new ResponseEntity<>(gasTypeDtoMapper.toDto(gasType), HttpStatus.CREATED);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  /**
+   * Gas Prices
+   */
+  @GetMapping(path = "prices")
+  ResponseEntity<List<GasPriceDto>> getAllGasPrices() {
+    try {
+      return new ResponseEntity<>(
+          gasPriceDtoMapper.toDtoList(gasService.getAllGasPrices()), HttpStatus.OK);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  /**
+   * Get gas price by gas station and gas type
+   * @param stationId
+   * @param typeId
+   * @return
+   */
   @GetMapping(path = "price/gasStation/{stationId}/gasType/{typeId}")
   ResponseEntity<GasPriceDto> getGasPriceById(
       @PathVariable Integer stationId, @PathVariable Integer typeId) {
@@ -72,7 +96,7 @@ public class GasController {
     }
   }
 
-  @GetMapping(path = "{gasType}")
+  @GetMapping(path = "prices/{gasType}")
   ResponseEntity<List<GasPriceDto>> getGasPriceByGasType(@PathVariable String gasType) {
     try {
       return new ResponseEntity<>(
@@ -82,6 +106,11 @@ public class GasController {
     }
   }
 
+  /**
+   * Get trusted gas stations
+   * @param stationId
+   * @return
+   */
   @GetMapping(path = "station/{stationId}/users")
   ResponseEntity<List<User>> getUsersByTrustedGasStation(@PathVariable Integer stationId) {
     try {

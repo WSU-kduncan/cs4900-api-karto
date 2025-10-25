@@ -48,6 +48,10 @@ public class CarService {
     return carRepository.saveAndFlush(carDtoMapper.updateEntity(carDto, existingCar));
   }
 
+  public Car createNewCar(CarDto carDto) throws EntityNotFoundException {
+    return carRepository.saveAndFlush(carDtoMapper.toEntity(carDto));
+  }
+
   /**
    * Car Image Service
    */

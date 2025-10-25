@@ -18,10 +18,12 @@ public interface CarDtoMapper {
   @Mapping(source = "image", target = "image.image")
   @Mapping(source = "vin", target = "image.carVin")
   @Mapping(source = "userEmail", target = "user.email")
+  @Mapping(source = "gasTypeId", target = "gasType.id")
   Car toEntity(CarDto carDto) throws EntityNotFoundException;
 
   @Mapping(source = "image.image", target = "image")
   @Mapping(source = "user.email", target = "userEmail")
+  @Mapping(source = "gasType.id", target = "gasTypeId")
   CarDto toDto(Car car) throws EntityNotFoundException;
 
   List<CarDto> toDtoList(List<Car> carList) throws EntityNotFoundException;

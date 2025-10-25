@@ -1,5 +1,7 @@
 package com.karto.service.service;
 
+import com.karto.service.dto.GasTypeDto;
+import com.karto.service.mapper.GasTypeDtoMapper;
 import com.karto.service.model.GasPrice;
 import com.karto.service.model.GasStation;
 import com.karto.service.model.GasType;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Service;
 public class GasService {
 
   private final GasTypeRepository gasTypeRepository;
+
+  private final GasTypeDtoMapper gasTypeDtoMapper;
 
   private final GasStationRepository gasStationRepository;
 
@@ -76,5 +80,9 @@ public class GasService {
       throw new EntityNotFoundException("Gas Price: Station " + gasStation.getId() + " or Type: "
           + gasType.getId() + " Not Found");
     return response.get();
+  }
+
+  public GasType createGasType(GasTypeDto gasTypeDto) throws EntityNotFoundException {
+    return gasTypeRepository.saveAndFlush(gasTypeDtoMapper.toEntity(gasTypeDto));
   }
 }
