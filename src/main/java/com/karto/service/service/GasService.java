@@ -1,9 +1,14 @@
 package com.karto.service.service;
 
+import com.karto.service.dto.GasPriceDto;
+import com.karto.service.dto.GasPriceIdDto;
+import com.karto.service.mapper.GasPriceDtoMapper;
+import com.karto.service.mapper.GasPriceIdDtoMapper;
 import com.karto.service.model.GasPrice;
 import com.karto.service.model.GasStation;
 import com.karto.service.model.GasType;
 import com.karto.service.model.User;
+import com.karto.service.model.composite.GasPriceId;
 import com.karto.service.repository.GasPriceRepository;
 import com.karto.service.repository.GasStationRepository;
 import com.karto.service.repository.GasTypeRepository;
@@ -26,8 +31,16 @@ public class GasService {
 
   private final GasPriceRepository gasPriceRepository;
 
+  private final GasPriceDtoMapper gasPriceDtoMapper;
+
+  private final GasPriceIdDtoMapper gasPriceIdDtoMapper;
+
   public List<GasType> getAllGasTypes() throws EntityNotFoundException {
     return gasTypeRepository.findAll();
+  }
+
+  public GasPrice saveGasPrice(GasPrice gasPrice) throws EntityNotFoundException {
+    return gasPriceRepository.saveAndFlush(gasPrice);
   }
 
   public List<GasPrice> getAllGasPrices() {
@@ -61,20 +74,25 @@ public class GasService {
     return response.get();
   }
 
+    public GasPrice putGasPrice(Integer gasStation, Integer gasType, GasPriceDto gasPriceDto)
+            throws EntityNotFoundException {
+      var gasPriceIdDto = GasPriceIdDto.builder().gasStationId(gasStation).gasTypeId(gasType).build();
+      var gasPriceIdEntity = gasPriceIdDtoMapper.toEntity(gasPriceIdDto);
+
+        GasPrice gasPrice = gasPriceRepository
+                .findById(gasPriceIdEntity)
+                .orElseThrow(() -> new EntityNotFoundException("Work Order (" + gasPriceIdEntity + ") not found"));
+
+        gasPriceDtoMapper.updateEntity(gasPriceDto, gasPrice);
+
+        return gasPriceRepository.saveAndFlush(gasPrice);
+  }
+
   public List<User> getUsersByGasStation(GasStation gasStation) {
     return trustedGasStationRepository.findByGasStation(gasStation);
   }
 
   public List<GasPrice> getGasPriceByGasType(String gasType) {
     return gasPriceRepository.findById_GasType_Name(gasType);
-  }
-
-  public GasPrice getGasPriceById(GasStation gasStation, GasType gasType)
-      throws EntityNotFoundException {
-    var response = gasPriceRepository.findByIdStationAndIdGasType(gasStation, gasType);
-    if (response.isEmpty())
-      throw new EntityNotFoundException("Gas Price: Station " + gasStation.getId() + " or Type: "
-          + gasType.getId() + " Not Found");
-    return response.get();
   }
 }
