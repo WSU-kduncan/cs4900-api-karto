@@ -1,0 +1,37 @@
+meta {
+  name: Update Trusted Gas Station
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{BASE_URL}}/user/:email/trustedStations?oldStationId=2&newStationId=4
+  body: json
+  auth: inherit
+}
+
+params:query {
+  oldStationId: 2
+  newStationId: 4
+}
+
+params:path {
+  email: jack.black@example.test
+}
+
+body:json {
+  {
+      "id": 4,
+      "longitude": 0.015592,
+      "latitude": 0.656815,
+      "name": "Oakland Station",
+      "addressLine": "4",
+      "city": "Oakland",
+      "state": "Oregon",
+      "zip": "1234567"
+    }
+}
+
+settings {
+  encodeUrl: true
+}

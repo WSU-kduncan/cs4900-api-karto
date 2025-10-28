@@ -3,6 +3,7 @@ package com.karto.service.controller;
 import com.karto.service.dto.UserDto;
 import com.karto.service.mapper.UserDtoMapper;
 import com.karto.service.model.GasStation;
+import com.karto.service.model.TrustedGasStation;
 import com.karto.service.model.User;
 import com.karto.service.service.UserService;
 
@@ -20,7 +21,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +36,38 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class UserController {
 
   private final UserService userService;
+
   private final UserDtoMapper userDtoMapper;
+
+  @PostMapping(path = "{email}/trustedStations/{stationId}")
+  ResponseEntity<Object> addTrustedGasStation(
+      @PathVariable String email, @PathVariable Integer stationId) {
+    if (stationId == null || email == null) {
+      return new ResponseEntity<>("Station ID or email was null!", HttpStatus.BAD_REQUEST);
+    }
+
+    TrustedGasStation trustedGasStation;
+    try {
+      trustedGasStation = userService.addTrustedGasStation(email, stationId);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(trustedGasStation, HttpStatus.OK);
+  }
+
+  @PutMapping(path = "{email}/trustedStations")
+  ResponseEntity<Object> updateGasPrice(
+      @PathVariable String email,
+      @RequestParam Integer oldStationId,
+      @RequestParam Integer newStationId) {
+    TrustedGasStation trustedGasStation;
+    try {
+      trustedGasStation = userService.putTrustedGasStation(email, oldStationId, newStationId);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(trustedGasStation, HttpStatus.OK);
+  }
 
   @GetMapping
   public ResponseEntity<List<UserDto>> getAllUsers() {

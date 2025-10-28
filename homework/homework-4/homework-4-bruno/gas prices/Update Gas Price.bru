@@ -1,0 +1,31 @@
+meta {
+  name: Update Gas Price
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{BASE_URL}}/gas/price/:gasStation/:gasType
+  body: json
+  auth: inherit
+}
+
+params:path {
+  gasType: 8
+  gasStation: 4
+}
+
+body:json {
+  {
+    "id": {
+      "gasStationId": 4,
+      "gasTypeId": 8
+    },
+    "price": 2.1075,
+    "updated": "2025-10-21T16:39:05Z"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
