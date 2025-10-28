@@ -1,0 +1,20 @@
+meta {
+  name: Get All Gas Prices
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{BASE_URL}}/gas/prices
+  body: none
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,20 @@
+meta {
+  name: Get All Cars Owned By
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{BASE_URL}}/cars/ownedBy/:ownerEmail
+  body: json
+  auth: inherit
+}
+
+params:path {
+  ownerEmail: irene.z@example.test
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

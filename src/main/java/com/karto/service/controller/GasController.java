@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
     produces = MediaType.APPLICATION_JSON_VALUE,
     consumes = MediaType.APPLICATION_JSON_VALUE)
 public class GasController {
-
   private final GasService gasService;
 
   private final GasPriceDtoMapper gasPriceDtoMapper;

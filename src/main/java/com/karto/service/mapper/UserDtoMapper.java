@@ -8,10 +8,9 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface UserDtoMapper {
-
   User toEntity(UserDto userDto) throws EntityNotFoundException;
 
-  UserDto toDto(User user) throws EntityNotFoundException;
+  UserDto toDto(User user);
 
-  List<UserDto> toDtoList(List<User> userList) throws EntityNotFoundException;
+  List<UserDto> toDtoList(List<User> users);
 }

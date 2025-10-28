@@ -1,0 +1,16 @@
+meta {
+  name: Get All Gas Stations
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{BASE_URL}}/gasstation
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

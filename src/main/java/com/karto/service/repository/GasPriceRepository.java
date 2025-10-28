@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GasPriceRepository extends JpaRepository<GasPrice, GasPriceId> {
-  Optional<GasPrice> findByIdStationAndIdGasType(GasStation stationId, GasType gasType);
 
   List<GasPrice> findById_GasType_Name(String gasTypeName);
 }

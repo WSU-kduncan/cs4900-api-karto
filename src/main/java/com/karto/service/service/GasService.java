@@ -10,6 +10,7 @@ import com.karto.service.repository.GasTypeRepository;
 import com.karto.service.repository.TrustedGasStationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +18,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class GasService {
 
-  private final GasPriceRepository gasPriceRepository;
+  private final GasTypeRepository gasTypeRepository;
 
   private final GasStationRepository gasStationRepository;
 
-  private final GasTypeRepository gasTypeRepository;
-
   private final TrustedGasStationRepository trustedGasStationRepository;
+
+  private final GasPriceRepository gasPriceRepository;
+
+  public List<GasType> getAllGasTypes() throws EntityNotFoundException {
+    return gasTypeRepository.findAll();
+  }
 
   public List<GasPrice> getAllGasPrices() {
     return gasPriceRepository.findAll();
@@ -36,10 +41,32 @@ public class GasService {
     return response.get();
   }
 
-  public GasType getGasTypeById(Integer id) {
-    var response = gasTypeRepository.findById(id);
-    if (response.isEmpty()) throw new EntityNotFoundException("Gas Type: ID " + id + " Not Found");
+  public GasType getGasTypeById(Integer id) throws EntityNotFoundException {
+    Optional<GasType> response = gasTypeRepository.findById(id);
+
+    if (response.isEmpty()) {
+      throw new EntityNotFoundException("GasType with id " + id + " not found.");
+    }
+
     return response.get();
+  }
+
+  public GasType getGasTypeByName(String name) throws EntityNotFoundException {
+    Optional<GasType> response = gasTypeRepository.findByName(name);
+
+    if (response.isEmpty()) {
+      throw new EntityNotFoundException("GasType with name " + name + " not found.");
+    }
+
+    return response.get();
+  }
+
+  public List<User> getUsersByGasStation(GasStation gasStation) {
+    return trustedGasStationRepository.findByGasStation(gasStation);
+  }
+
+  public List<GasPrice> getGasPriceByGasType(String gasType) {
+    return gasPriceRepository.findById_GasType_Name(gasType);
   }
 
   public GasPrice getGasPriceById(GasStation gasStation, GasType gasType)
@@ -49,13 +76,5 @@ public class GasService {
       throw new EntityNotFoundException("Gas Price: Station " + gasStation.getId() + " or Type: "
           + gasType.getId() + " Not Found");
     return response.get();
-  }
-
-  public List<GasPrice> getGasPriceByGasType(String gasType) {
-    return gasPriceRepository.findById_GasType_Name(gasType);
-  }
-
-  public List<User> getUsersByTrustedGasStation(GasStation trustedGasStation) {
-    return trustedGasStationRepository.findByGasStation(trustedGasStation);
   }
 }

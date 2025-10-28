@@ -1,0 +1,16 @@
+meta {
+  name: Get Gas Station By Name
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{BASE_URL}}/gasstation/search/Spec Marathon
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

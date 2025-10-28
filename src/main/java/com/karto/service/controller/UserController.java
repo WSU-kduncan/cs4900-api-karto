@@ -2,7 +2,7 @@ package com.karto.service.controller;
 
 import com.karto.service.dto.UserDto;
 import com.karto.service.mapper.UserDtoMapper;
-import com.karto.service.model.TrustedGasStation;
+import com.karto.service.model.GasStation;
 import com.karto.service.model.User;
 import com.karto.service.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,19 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping(path = "user", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequiredArgsConstructor
 public class UserController {
 
   private final UserService userService;
-
-  private final UserDtoMapper userMapper;
+  private final UserDtoMapper userDtoMapper;
 
   @GetMapping
   public ResponseEntity<List<UserDto>> getAllUsers() {
     try {
       List<User> users = userService.getAllUsers();
-      return new ResponseEntity<>(userMapper.toDtoList(users), HttpStatus.OK);
+      return new ResponseEntity<>(userDtoMapper.toDtoList(users), HttpStatus.OK);
     } catch (EntityNotFoundException e) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -39,7 +38,7 @@ public class UserController {
   public ResponseEntity<UserDto> getUserByEmail(@PathVariable String email) {
     try {
       User user = userService.getUserByEmail(email);
-      return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
+      return new ResponseEntity<>(userDtoMapper.toDto(user), HttpStatus.OK);
     } catch (EntityNotFoundException e) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -49,15 +48,14 @@ public class UserController {
   public ResponseEntity<UserDto> getUserByUsername(@PathVariable String username) {
     try {
       User user = userService.getUserByUsername(username);
-      return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
+      return new ResponseEntity<>(userDtoMapper.toDto(user), HttpStatus.OK);
     } catch (EntityNotFoundException e) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
 
   @GetMapping(path = "{email}/trustedStations")
-  public ResponseEntity<List<TrustedGasStation>> getTrustedGasStationsByUser(
-      @PathVariable String email) {
+  public ResponseEntity<List<GasStation>> getTrustedGasStationsByUser(@PathVariable String email) {
     try {
       User user = userService.getUserByEmail(email);
       return new ResponseEntity<>(userService.getGasStationByUser(user), HttpStatus.OK);

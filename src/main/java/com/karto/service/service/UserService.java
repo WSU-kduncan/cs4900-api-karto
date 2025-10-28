@@ -1,6 +1,6 @@
 package com.karto.service.service;
 
-import com.karto.service.model.TrustedGasStation;
+import com.karto.service.model.GasStation;
 import com.karto.service.model.User;
 import com.karto.service.repository.TrustedGasStationRepository;
 import com.karto.service.repository.UserRepository;
@@ -38,7 +38,8 @@ public class UserService {
     return user.get();
   }
 
-  public List<TrustedGasStation> getGasStationByUser(User user) {
-    return trustedGasStationRepository.findByUser(user);
+  public List<GasStation> getGasStationByUser(User user) {
+    var trustedGasStations = trustedGasStationRepository.findByUser(user);
+    return trustedGasStations.stream().map(g -> g.getGasStation()).toList();
   }
 }

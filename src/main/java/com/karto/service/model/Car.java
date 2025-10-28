@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.Year;
 import lombok.Data;
@@ -19,6 +20,9 @@ public class Car {
   @Column(name = "car_vin", columnDefinition = "CHAR(17)", length = 17, nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   String vin;
+
+  @OneToOne(mappedBy = "car")
+  CarImage image;
 
   @JoinColumn(name = "user_email", nullable = false)
   @ManyToOne

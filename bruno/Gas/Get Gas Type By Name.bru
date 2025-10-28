@@ -1,0 +1,20 @@
+meta {
+  name: Get Gas Type By Name
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{BASE_URL}}/gas/types/name/:name
+  body: json
+  auth: inherit
+}
+
+params:path {
+  name: Biodiesel
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
