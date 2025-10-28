@@ -1,13 +1,10 @@
 package com.karto.service.mapper;
 
-import java.util.List;
-
-import org.mapstruct.Mapper;
-
 import com.karto.service.dto.UserDto;
 import com.karto.service.model.User;
-
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface UserDtoMapper {
