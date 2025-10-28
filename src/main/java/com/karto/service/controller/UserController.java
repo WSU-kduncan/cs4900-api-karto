@@ -1,6 +1,5 @@
 package com.karto.service.controller;
 
-import com.karto.service.dto.GasStationDto;
 import com.karto.service.dto.UserDto;
 import com.karto.service.mapper.UserDtoMapper;
 import com.karto.service.model.GasStation;
@@ -13,7 +12,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,12 +45,14 @@ public class UserController {
     return new ResponseEntity<>(trustedGasStation, HttpStatus.OK);
   }
 
-  @PutMapping(path = "{email}")
+  @PutMapping(path = "{email}/trustedStations")
   ResponseEntity<Object> updateGasPrice(
-      @PathVariable String email, @RequestBody GasStationDto gasStationDto) {
+      @PathVariable String email,
+      @RequestParam Integer oldStationId,
+      @RequestParam Integer newStationId) {
     TrustedGasStation trustedGasStation;
     try {
-      trustedGasStation = userService.putTrustedGasStation(email, gasStationDto);
+      trustedGasStation = userService.putTrustedGasStation(email, oldStationId, newStationId);
     } catch (EntityNotFoundException e) {
       return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
     }

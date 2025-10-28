@@ -54,10 +54,11 @@ public class UserService {
 
   public TrustedGasStation addTrustedGasStation(String email, Integer gasStationId)
       throws EntityExistsException, EntityNotFoundException {
-      User user = getUserByEmail(email);
-      GasStation gasStation = gasStationRepository.findById(gasStationId).orElse(null);
+    User user = getUserByEmail(email);
+    GasStation gasStation = gasStationRepository.findById(gasStationId).orElse(null);
     if (user == null || gasStation == null) {
-        throw new EntityNotFoundException("User not found with email: " + email + " or gas station ID: " + gasStationId);
+      throw new EntityNotFoundException(
+          "User not found with email: " + email + " or gas station ID: " + gasStationId);
     }
 
     List<Integer> gasStationIds =
@@ -67,12 +68,14 @@ public class UserService {
     }
 
     TrustedGasStationId trustedGasStationId = new TrustedGasStationId(email, gasStationId);
-    TrustedGasStation trustedGasStation = new TrustedGasStation(trustedGasStationId, user, gasStation);
+    TrustedGasStation trustedGasStation =
+        new TrustedGasStation(trustedGasStationId, user, gasStation);
 
     return trustedGasStationRepository.saveAndFlush(trustedGasStation);
   }
 
-  public TrustedGasStation putTrustedGasStation(String email, Integer oldGasStationId, Integer newGasStationId)
+  public TrustedGasStation putTrustedGasStation(
+      String email, Integer oldGasStationId, Integer newGasStationId)
       throws EntityNotFoundException {
     User user = getUserByEmail(email);
 
@@ -80,21 +83,24 @@ public class UserService {
     TrustedGasStation oldTrustedGasStation =
         trustedGasStationRepository.findByUserAndGasStation(user, oldGasStation);
 
-      if (user == null || oldGasStation == null) {
-          throw new EntityNotFoundException("User/GasStation not found with email: " + email);
-      }
+    if (user == null || oldGasStation == null) {
+      throw new EntityNotFoundException("User/GasStation not found with email: " + email);
+    }
 
-      if (oldTrustedGasStation == null) {
-          throw new EntityNotFoundException(
-                  "TrustedGasStation could not be found with GasStation body or email: " + email);
-      }
+    if (oldTrustedGasStation == null) {
+      throw new EntityNotFoundException(
+          "TrustedGasStation could not be found with GasStation body or email: " + email);
+    }
 
     trustedGasStationRepository.delete(oldTrustedGasStation);
 
-      GasStation newGasStation = gasStationRepository.findById(newGasStationId).orElseThrow(() -> new EntityNotFoundException("Gas station Id not found"));
-      TrustedGasStationId trustedGasStationId = new TrustedGasStationId(email, newGasStationId);
-      TrustedGasStation newTrustedGasStation = new TrustedGasStation(trustedGasStationId, user, newGasStation);
+    GasStation newGasStation = gasStationRepository
+        .findById(newGasStationId)
+        .orElseThrow(() -> new EntityNotFoundException("Gas station Id not found"));
+    TrustedGasStationId trustedGasStationId = new TrustedGasStationId(email, newGasStationId);
+    TrustedGasStation newTrustedGasStation =
+        new TrustedGasStation(trustedGasStationId, user, newGasStation);
 
-      return trustedGasStationRepository.saveAndFlush(newTrustedGasStation);
+    return trustedGasStationRepository.saveAndFlush(newTrustedGasStation);
   }
 }
