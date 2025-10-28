@@ -1,0 +1,33 @@
+meta {
+  name: Put Update Gas Station
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{BASE_URL}}/gasstation/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 11
+}
+
+body:json {
+  {
+    "id": 11,
+    "longitude": 0.52987,
+    "latitude": 0.351804,
+    "name": "Speed Way",
+    "addressLine": "4",
+    "city": "Sidney",
+    "state": "Ohio",
+    "zip": "45365"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

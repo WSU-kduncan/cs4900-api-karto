@@ -17,7 +17,7 @@ import org.hibernate.annotations.SourceType;
 public class User {
   @Id
   @Column(name = "user_email", length = 255, nullable = false)
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  // @GeneratedValue(strategy = GenerationType.IDENTITY)
   String email;
 
   @Column(name = "username", length = 31, nullable = false)

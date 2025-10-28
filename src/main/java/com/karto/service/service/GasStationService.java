@@ -29,4 +29,24 @@ public class GasStationService {
   public List<GasStation> findGasStationsByName(String name) {
     return gasStationRepository.findByNameContainingIgnoreCase(name);
   }
+
+  public GasStation createGasStation(GasStation gasStation) {
+    return gasStationRepository.saveAndFlush(gasStation);
+  }
+
+  public GasStation updateGasStation(Integer id, GasStation gasStation) {
+    GasStation existingStation = gasStationRepository
+        .findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("GasStation not found with id: " + id));
+
+    existingStation.setName(gasStation.getName());
+    existingStation.setLongitude(gasStation.getLongitude());
+    existingStation.setLatitude(gasStation.getLatitude());
+    existingStation.setAddressLine(gasStation.getAddressLine());
+    existingStation.setCity(gasStation.getCity());
+    existingStation.setState(gasStation.getState());
+    existingStation.setZip(gasStation.getZip());
+
+    return gasStationRepository.saveAndFlush(existingStation);
+  }
 }

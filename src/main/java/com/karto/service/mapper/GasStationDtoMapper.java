@@ -15,6 +15,8 @@ public interface GasStationDtoMapper {
 
   List<GasStationDto> toDtoList(List<GasStation> gasStations);
 
+  GasStation toEntity(GasStationDto gasStationDto);
+
   @Named("usersToEmails")
   default List<String> usersToEmails(List<User> users) {
     if (users == null) {
