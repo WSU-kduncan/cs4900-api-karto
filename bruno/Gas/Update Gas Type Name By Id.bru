@@ -1,0 +1,27 @@
+meta {
+  name: Update Gas Type Name By Id
+  type: http
+  seq: 8
+}
+
+put {
+  url: {{BASE_URL}}/gas/types/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 6
+}
+
+body:json {
+  {
+    "id": 6,
+    "name": "E85 Flex"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

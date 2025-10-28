@@ -1,13 +1,19 @@
 meta {
-  name: Get All Gas Types
+  name: Create New Gas Type
   type: http
-  seq: 6
+  seq: 7
 }
 
-get {
+post {
   url: {{BASE_URL}}/gas/types
   body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "name": "Unleaded 88"
+  }
 }
 
 settings {
