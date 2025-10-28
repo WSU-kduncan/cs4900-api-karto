@@ -4,7 +4,6 @@ import com.karto.service.dto.GasPriceDto;
 import com.karto.service.model.GasPrice;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
@@ -19,5 +18,6 @@ public interface GasPriceDtoMapper {
 
   List<GasPriceDto> toDtoList(List<GasPrice> gasPriceList) throws EntityNotFoundException;
 
-  void updateEntity(GasPriceDto gasPriceDto, @MappingTarget GasPrice gasPrice) throws EntityNotFoundException;
+  void updateEntity(GasPriceDto gasPriceDto, @MappingTarget GasPrice gasPrice)
+      throws EntityNotFoundException;
 }

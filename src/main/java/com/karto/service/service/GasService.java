@@ -8,7 +8,6 @@ import com.karto.service.model.GasPrice;
 import com.karto.service.model.GasStation;
 import com.karto.service.model.GasType;
 import com.karto.service.model.User;
-import com.karto.service.model.composite.GasPriceId;
 import com.karto.service.repository.GasPriceRepository;
 import com.karto.service.repository.GasStationRepository;
 import com.karto.service.repository.GasTypeRepository;
@@ -74,18 +73,20 @@ public class GasService {
     return response.get();
   }
 
-    public GasPrice putGasPrice(Integer gasStation, Integer gasType, GasPriceDto gasPriceDto)
-            throws EntityNotFoundException {
-      var gasPriceIdDto = GasPriceIdDto.builder().gasStationId(gasStation).gasTypeId(gasType).build();
-      var gasPriceIdEntity = gasPriceIdDtoMapper.toEntity(gasPriceIdDto);
+  public GasPrice putGasPrice(Integer gasStation, Integer gasType, GasPriceDto gasPriceDto)
+      throws EntityNotFoundException {
+    var gasPriceIdDto =
+        GasPriceIdDto.builder().gasStationId(gasStation).gasTypeId(gasType).build();
+    var gasPriceIdEntity = gasPriceIdDtoMapper.toEntity(gasPriceIdDto);
 
-        GasPrice gasPrice = gasPriceRepository
-                .findById(gasPriceIdEntity)
-                .orElseThrow(() -> new EntityNotFoundException("Work Order (" + gasPriceIdEntity + ") not found"));
+    GasPrice gasPrice = gasPriceRepository
+        .findById(gasPriceIdEntity)
+        .orElseThrow(
+            () -> new EntityNotFoundException("Work Order (" + gasPriceIdEntity + ") not found"));
 
-        gasPriceDtoMapper.updateEntity(gasPriceDto, gasPrice);
+    gasPriceDtoMapper.updateEntity(gasPriceDto, gasPrice);
 
-        return gasPriceRepository.saveAndFlush(gasPrice);
+    return gasPriceRepository.saveAndFlush(gasPrice);
   }
 
   public List<User> getUsersByGasStation(GasStation gasStation) {

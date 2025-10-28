@@ -1,10 +1,7 @@
 package com.karto.service.mapper;
 
-import com.karto.service.dto.GasPriceDto;
 import com.karto.service.dto.GasPriceIdDto;
-import com.karto.service.model.GasPrice;
 import com.karto.service.model.composite.GasPriceId;
-import com.karto.service.service.GasService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -23,7 +20,8 @@ public interface GasPriceIdDtoMapper {
 
   List<GasPriceIdDto> toDtoList(List<GasPriceId> gasPriceIdList) throws EntityNotFoundException;
 
-    @Mapping(source = "gasStationId", target = "station.id")
-    @Mapping(source = "gasTypeId", target = "gasType.id")
-    void updateEntity(GasPriceIdDto gasPriceIdDto, @MappingTarget GasPriceId gasPrice) throws EntityNotFoundException;
+  @Mapping(source = "gasStationId", target = "station.id")
+  @Mapping(source = "gasTypeId", target = "gasType.id")
+  void updateEntity(GasPriceIdDto gasPriceIdDto, @MappingTarget GasPriceId gasPrice)
+      throws EntityNotFoundException;
 }
