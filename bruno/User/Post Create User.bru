@@ -1,0 +1,30 @@
+meta {
+  name: Post Create User
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{BASE_URL}}/user
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+    {
+      "email": "j.wise@example.test",
+      "username": "jwise",
+      "password": "$2b$12$7nV3pQe9ZcR4sF2mHk8Lt0uJwXy1A5bCq6Zr8Tj9LmP0oQwE2y3",
+        "createdAt": "2025-10-28T02:24:49Z"
+    }
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
