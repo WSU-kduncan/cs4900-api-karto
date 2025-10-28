@@ -7,6 +7,7 @@ import com.karto.service.service.CarService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -66,10 +67,12 @@ public class CarController {
 
     try {
       car = carService.createNewCar(carDto);
-      
+
       return new ResponseEntity<>(carDtoMapper.toDto(car), HttpStatus.CREATED);
     } catch (EntityNotFoundException e) {
       return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    } catch (DataIntegrityViolationException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.CONFLICT);
     }
   }
 }

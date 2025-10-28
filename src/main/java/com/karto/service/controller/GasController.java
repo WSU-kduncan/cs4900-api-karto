@@ -11,12 +11,14 @@ import com.karto.service.service.GasService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,6 +62,24 @@ public class GasController {
 
       return new ResponseEntity<>(gasTypeDtoMapper.toDto(gasType), HttpStatus.CREATED);
     } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    } catch (DataIntegrityViolationException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.CONFLICT);
+    }
+  }
+
+  @PutMapping("types/{id}")
+  ResponseEntity<Object> updateGasType(
+      @PathVariable Integer id, @RequestBody GasTypeDto gasTypeDto) {
+    GasType gasType;
+
+    try {
+      gasType = gasService.putGasType(id, gasTypeDto);
+
+      return new ResponseEntity<>(gasTypeDtoMapper.toDto(gasType), HttpStatus.OK);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    } catch (IllegalStateException e) {
       return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
     }
   }

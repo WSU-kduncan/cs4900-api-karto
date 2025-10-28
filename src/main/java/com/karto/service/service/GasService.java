@@ -14,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -83,6 +84,27 @@ public class GasService {
   }
 
   public GasType createGasType(GasTypeDto gasTypeDto) throws EntityNotFoundException {
+    // Check if gas type with the same name already exists
+    Optional<GasType> existingGasType = gasTypeRepository.findByName(gasTypeDto.getName());
+    if (existingGasType.isPresent()) {
+      throw new DataIntegrityViolationException(
+          "GasType with name " + gasTypeDto.getName() + " already exists.");
+    }
+
     return gasTypeRepository.saveAndFlush(gasTypeDtoMapper.toEntity(gasTypeDto));
+  }
+
+  public GasType putGasType(Integer id, GasTypeDto gasTypeDto) throws EntityNotFoundException {
+    GasType existingGasType = gasTypeRepository
+        .findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("GasType with id " + id + " not found."));
+
+    if (gasTypeDto.getId() != existingGasType.getId()) {
+      throw new IllegalStateException("GasType ID in path and request body do not match: " + id
+          + " != " + gasTypeDto.getId() + ". Cannot change ID of existing GasType.");
+    }
+    existingGasType.setName(gasTypeDto.getName());
+
+    return gasTypeRepository.saveAndFlush(existingGasType);
   }
 }

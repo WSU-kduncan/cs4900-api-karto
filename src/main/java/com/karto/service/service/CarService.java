@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -49,6 +50,12 @@ public class CarService {
   }
 
   public Car createNewCar(CarDto carDto) throws EntityNotFoundException {
+    // Ensure the car does not already exist
+    if (carRepository.existsById(carDto.getVin())) {
+      throw new DataIntegrityViolationException(
+          "Car with vin " + carDto.getVin() + " already exists.");
+    }
+
     return carRepository.saveAndFlush(carDtoMapper.toEntity(carDto));
   }
 
