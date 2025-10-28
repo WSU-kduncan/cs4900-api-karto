@@ -1,8 +1,10 @@
 package com.karto.service.controller;
 
+import com.karto.service.dto.GasStationDto;
 import com.karto.service.dto.UserDto;
 import com.karto.service.mapper.UserDtoMapper;
 import com.karto.service.model.GasStation;
+import com.karto.service.model.TrustedGasStation;
 import com.karto.service.model.User;
 import com.karto.service.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,7 +21,36 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
   private final UserService userService;
+
   private final UserDtoMapper userDtoMapper;
+
+  @PostMapping(path = "{email}/trustedStations/{stationId}")
+  ResponseEntity<Object> addTrustedGasStation(
+      @PathVariable String email, @PathVariable Integer stationId) {
+    if (stationId == null || email == null) {
+      return new ResponseEntity<>("Station ID or email was null!", HttpStatus.BAD_REQUEST);
+    }
+
+    TrustedGasStation trustedGasStation;
+    try {
+      trustedGasStation = userService.addTrustedGasStation(email, stationId);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(trustedGasStation, HttpStatus.OK);
+  }
+
+  @PutMapping(path = "{email}")
+  ResponseEntity<Object> updateGasPrice(
+      @PathVariable String email, @RequestBody GasStationDto gasStationDto) {
+    TrustedGasStation trustedGasStation;
+    try {
+      trustedGasStation = userService.putTrustedGasStation(email, gasStationDto);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(trustedGasStation, HttpStatus.OK);
+  }
 
   @GetMapping
   public ResponseEntity<List<UserDto>> getAllUsers() {
@@ -60,15 +91,4 @@ public class UserController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
-
-//  @PostMapping
-//  ResponseEntity<Object> createTrustedGasStation(@RequestBody Trustedgasstation workOrderRequestDto) {
-//      WorkOrder workOrder;
-//      try {
-//          workOrder = workOrderService.createWorkOrderRequest(workOrderRequestDto);
-//      } catch (EntityNotFoundException e) {
-//          return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-//      }
-//      return new ResponseEntity<>(workOrder, HttpStatus.OK);
-//  }
 }
