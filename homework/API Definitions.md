@@ -6,6 +6,7 @@
 - Get all maintenances by car
 - Get maintenance by Id
 - Post maintenance
+- Put maintenance
 
 ### Maintenance Type
 
