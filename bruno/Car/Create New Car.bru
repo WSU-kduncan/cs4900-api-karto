@@ -1,0 +1,30 @@
+meta {
+  name: Create New Car
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/cars
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "vin": "BH1F3528BVF671230",
+    "image": null,
+    "userEmail": "leo1990@example.test",
+    "make": "GMC",
+    "model": "Acadia",
+    "year": "2016",
+    "color": "Slate",
+    "mileage": 106221,
+    "gasTypeId": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

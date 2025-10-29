@@ -1,11 +1,11 @@
 meta {
   name: Get Gas Price By Premium Gas Type
   type: http
-  seq: 5
+  seq: 3
 }
 
 get {
-  url: {{BASE_URL}}/gas/:gasType
+  url: {{BASE_URL}}/gas/prices/:gasType
   body: none
   auth: inherit
 }

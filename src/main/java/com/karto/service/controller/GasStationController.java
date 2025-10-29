@@ -12,11 +12,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "gasstation", produces = MediaType.APPLICATION_JSON_VALUE) // Base path
+@RequestMapping(
+    path = "gasstation",
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class GasStationController {
 
@@ -46,5 +52,30 @@ public class GasStationController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     return new ResponseEntity<>(gasStationDtoMapper.toDtoList(stations), HttpStatus.OK);
+  }
+
+  @PostMapping
+  public ResponseEntity<GasStationDto> createGasStation(@RequestBody GasStationDto gasStationDto) {
+    try {
+      GasStation gasStation = gasStationDtoMapper.toEntity(gasStationDto);
+      GasStation createdStation = gasStationService.createGasStation(gasStation);
+      return new ResponseEntity<>(gasStationDtoMapper.toDto(createdStation), HttpStatus.CREATED);
+    } catch (Exception e) {
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @PutMapping(path = "{id}")
+  public ResponseEntity<GasStationDto> updateGasStation(
+      @PathVariable Integer id, @RequestBody GasStationDto gasStationDto) {
+    try {
+      GasStation gasStation = gasStationDtoMapper.toEntity(gasStationDto);
+      GasStation updatedStation = gasStationService.updateGasStation(id, gasStation);
+      return new ResponseEntity<>(gasStationDtoMapper.toDto(updatedStation), HttpStatus.OK);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    } catch (Exception e) {
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
   }
 }

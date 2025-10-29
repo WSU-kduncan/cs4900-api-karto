@@ -1,0 +1,22 @@
+meta {
+  name: Create New Gas Type
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{BASE_URL}}/gas/types
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Unleaded 88"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

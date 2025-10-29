@@ -1,5 +1,7 @@
 package com.karto.service.service;
 
+import com.karto.service.dto.CarDto;
+import com.karto.service.mapper.CarDtoMapper;
 import com.karto.service.model.Car;
 import com.karto.service.model.CarImage;
 import com.karto.service.repository.CarImageRepository;
@@ -8,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -17,6 +20,8 @@ public class CarService {
   private final CarRepository carRepository;
 
   private final CarImageRepository carImageRepository;
+
+  private final CarDtoMapper carDtoMapper;
 
   public List<Car> getAllCars() throws EntityNotFoundException {
     return carRepository.findAll();
@@ -36,6 +41,27 @@ public class CarService {
     return response.get();
   }
 
+  public Car putCar(String vin, CarDto carDto) throws EntityNotFoundException {
+    Car existingCar = carRepository
+        .findById(vin)
+        .orElseThrow(() -> new EntityNotFoundException("Car with vin " + vin + " not found."));
+
+    return carRepository.saveAndFlush(carDtoMapper.updateEntity(carDto, existingCar));
+  }
+
+  public Car createNewCar(CarDto carDto) throws EntityNotFoundException {
+    // Ensure the car does not already exist
+    if (carRepository.existsById(carDto.getVin())) {
+      throw new DataIntegrityViolationException(
+          "Car with vin " + carDto.getVin() + " already exists.");
+    }
+
+    return carRepository.saveAndFlush(carDtoMapper.toEntity(carDto));
+  }
+
+  /**
+   * Car Image Service
+   */
   public List<CarImage> getAllCarImages() throws EntityNotFoundException {
     return carImageRepository.findAll();
   }

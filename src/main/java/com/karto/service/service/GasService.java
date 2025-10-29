@@ -1,5 +1,11 @@
 package com.karto.service.service;
 
+import com.karto.service.dto.GasPriceDto;
+import com.karto.service.dto.GasPriceIdDto;
+import com.karto.service.dto.GasTypeDto;
+import com.karto.service.mapper.GasPriceDtoMapper;
+import com.karto.service.mapper.GasPriceIdDtoMapper;
+import com.karto.service.mapper.GasTypeDtoMapper;
 import com.karto.service.model.GasPrice;
 import com.karto.service.model.GasStation;
 import com.karto.service.model.GasType;
@@ -12,6 +18,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -20,14 +27,24 @@ public class GasService {
 
   private final GasTypeRepository gasTypeRepository;
 
+  private final GasTypeDtoMapper gasTypeDtoMapper;
+
   private final GasStationRepository gasStationRepository;
 
   private final TrustedGasStationRepository trustedGasStationRepository;
 
   private final GasPriceRepository gasPriceRepository;
 
+  private final GasPriceDtoMapper gasPriceDtoMapper;
+
+  private final GasPriceIdDtoMapper gasPriceIdDtoMapper;
+
   public List<GasType> getAllGasTypes() throws EntityNotFoundException {
     return gasTypeRepository.findAll();
+  }
+
+  public GasPrice saveGasPrice(GasPrice gasPrice) throws EntityNotFoundException {
+    return gasPriceRepository.saveAndFlush(gasPrice);
   }
 
   public List<GasPrice> getAllGasPrices() {
@@ -61,6 +78,22 @@ public class GasService {
     return response.get();
   }
 
+  public GasPrice putGasPrice(Integer gasStation, Integer gasType, GasPriceDto gasPriceDto)
+      throws EntityNotFoundException {
+    var gasPriceIdDto =
+        GasPriceIdDto.builder().gasStationId(gasStation).gasTypeId(gasType).build();
+    var gasPriceIdEntity = gasPriceIdDtoMapper.toEntity(gasPriceIdDto);
+
+    GasPrice gasPrice = gasPriceRepository
+        .findById(gasPriceIdEntity)
+        .orElseThrow(
+            () -> new EntityNotFoundException("Work Order (" + gasPriceIdEntity + ") not found"));
+
+    gasPriceDtoMapper.updateEntity(gasPriceDto, gasPrice);
+
+    return gasPriceRepository.saveAndFlush(gasPrice);
+  }
+
   public List<User> getUsersByGasStation(GasStation gasStation) {
     return trustedGasStationRepository.findByGasStation(gasStation);
   }
@@ -76,5 +109,30 @@ public class GasService {
       throw new EntityNotFoundException("Gas Price: Station " + gasStation.getId() + " or Type: "
           + gasType.getId() + " Not Found");
     return response.get();
+  }
+
+  public GasType createGasType(GasTypeDto gasTypeDto) throws EntityNotFoundException {
+    // Check if gas type with the same name already exists
+    Optional<GasType> existingGasType = gasTypeRepository.findByName(gasTypeDto.getName());
+    if (existingGasType.isPresent()) {
+      throw new DataIntegrityViolationException(
+          "GasType with name " + gasTypeDto.getName() + " already exists.");
+    }
+
+    return gasTypeRepository.saveAndFlush(gasTypeDtoMapper.toEntity(gasTypeDto));
+  }
+
+  public GasType putGasType(Integer id, GasTypeDto gasTypeDto) throws EntityNotFoundException {
+    GasType existingGasType = gasTypeRepository
+        .findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("GasType with id " + id + " not found."));
+
+    if (gasTypeDto.getId() != existingGasType.getId()) {
+      throw new IllegalStateException("GasType ID in path and request body do not match: " + id
+          + " != " + gasTypeDto.getId() + ". Cannot change ID of existing GasType.");
+    }
+    existingGasType.setName(gasTypeDto.getName());
+
+    return gasTypeRepository.saveAndFlush(existingGasType);
   }
 }

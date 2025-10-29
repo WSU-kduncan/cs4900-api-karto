@@ -1,0 +1,26 @@
+meta {
+  name: Save Gas Price
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/gas
+  body: json
+  auth: inherit
+}
+
+body:json {
+    {
+      "id": {
+        "gasStationId": 4,
+        "gasTypeId": 8
+      },
+      "price": 1.0875,
+      "updated": "2025-10-21T16:39:05Z"
+    }
+}
+
+settings {
+  encodeUrl: true
+}

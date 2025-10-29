@@ -8,6 +8,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
@@ -17,6 +18,7 @@ public class CarImage {
   String carVin;
 
   @OneToOne
+  @EqualsAndHashCode.Exclude
   @MapsId
   @JoinColumn(name = "car_vin", columnDefinition = "CHAR(17)", nullable = false)
   Car car;

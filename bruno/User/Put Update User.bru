@@ -1,0 +1,33 @@
+meta {
+  name: Put Update User
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{BASE_URL}}/user/:email
+  body: json
+  auth: inherit
+}
+
+params:path {
+  email: j.wise@example.test
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+    {
+      "email": "j.wise@example.test",
+      "username": "updatedUsername",
+      "password": "$2b$12$7nV3pQe9ZcR4sF2mHk8Lt0uJwXy1A5bCq6Zr8Tj9LmP0oQwE2y3"
+    }
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

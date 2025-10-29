@@ -2,14 +2,20 @@ package com.karto.service.controller;
 
 import com.karto.service.dto.CarDto;
 import com.karto.service.mapper.CarDtoMapper;
+import com.karto.service.model.Car;
 import com.karto.service.service.CarService;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,5 +45,34 @@ public class CarController {
   ResponseEntity<List<CarDto>> getCarsByOwnerEmail(@PathVariable String ownerEmail) {
     return new ResponseEntity<>(
         carDtoMapper.toDtoList(carService.getAllCarsByOwner(ownerEmail)), HttpStatus.OK);
+  }
+
+  @PutMapping("{carVin}")
+  ResponseEntity<Object> updateCarByVin(
+      @PathVariable("carVin") String carVin, @RequestBody CarDto carDto) {
+    Car car;
+
+    try {
+      car = carService.putCar(carVin, carDto);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    return new ResponseEntity<>(carDtoMapper.toDto(car), HttpStatus.OK);
+  }
+
+  @PostMapping
+  ResponseEntity<Object> addCar(@RequestBody CarDto carDto) {
+    Car car;
+
+    try {
+      car = carService.createNewCar(carDto);
+
+      return new ResponseEntity<>(carDtoMapper.toDto(car), HttpStatus.CREATED);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    } catch (DataIntegrityViolationException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.CONFLICT);
+    }
   }
 }

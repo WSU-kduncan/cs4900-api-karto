@@ -1,5 +1,6 @@
 package com.karto.service.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -26,6 +28,7 @@ public class Maintenance {
 
   @JoinColumn(name = "car_vin", nullable = false)
   @ManyToOne
+  @ToString.Exclude
   Car car;
 
   @Column(name = "maintenance_datetime", nullable = false)
@@ -37,9 +40,9 @@ public class Maintenance {
   @Column(name = "cost", columnDefinition = "DECIMAL(7,4) UNSIGNED")
   BigDecimal cost;
 
-  @OneToMany(mappedBy = "id.maintenance")
+  @OneToMany(mappedBy = "id.maintenance", cascade = CascadeType.ALL)
   List<MaintenanceItemDetail> itemDetails;
 
-  @OneToOne(mappedBy = "maintenance")
+  @OneToOne(mappedBy = "maintenance", cascade = CascadeType.ALL, orphanRemoval = true)
   MaintenanceReceipt receipt;
 }

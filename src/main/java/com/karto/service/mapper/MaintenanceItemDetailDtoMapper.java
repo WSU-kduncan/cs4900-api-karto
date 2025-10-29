@@ -3,7 +3,9 @@ package com.karto.service.mapper;
 import com.karto.service.dto.MaintenanceItemDetailDto;
 import com.karto.service.model.MaintenanceItemDetail;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 @Mapper(
     componentModel = "spring",
@@ -14,4 +16,10 @@ public interface MaintenanceItemDetailDtoMapper {
 
   MaintenanceItemDetailDto toDto(MaintenanceItemDetail maintenanceItemDetail)
       throws EntityNotFoundException;
+
+  List<MaintenanceItemDetail> toEntityList(List<MaintenanceItemDetailDto> maintenanceItemDetails);
+
+  void updateEntity(
+      MaintenanceItemDetailDto maintenanceItemDetailDto,
+      @MappingTarget MaintenanceItemDetail maintenanceItemDetail);
 }

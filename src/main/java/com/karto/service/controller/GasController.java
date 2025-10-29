@@ -4,6 +4,7 @@ import com.karto.service.dto.GasPriceDto;
 import com.karto.service.dto.GasTypeDto;
 import com.karto.service.mapper.GasPriceDtoMapper;
 import com.karto.service.mapper.GasTypeDtoMapper;
+import com.karto.service.model.GasPrice;
 import com.karto.service.model.GasStation;
 import com.karto.service.model.GasType;
 import com.karto.service.model.User;
@@ -11,11 +12,15 @@ import com.karto.service.service.GasService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,22 +34,33 @@ public class GasController {
   private final GasService gasService;
 
   private final GasPriceDtoMapper gasPriceDtoMapper;
+
   private final GasTypeDtoMapper gasTypeDtoMapper;
 
-  @GetMapping("types")
-  ResponseEntity<List<GasTypeDto>> getAllGasTypes() {
-    return new ResponseEntity<>(
-        gasTypeDtoMapper.toDtoList(gasService.getAllGasTypes()), HttpStatus.OK);
+  @PostMapping
+  ResponseEntity<Object> saveGasPrice(@RequestBody GasPriceDto gasPriceDto) {
+    GasPrice gasPrice;
+    try {
+      var dto = gasPriceDtoMapper.toEntity(gasPriceDto);
+      gasPrice = gasService.saveGasPrice(dto);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(gasPriceDtoMapper.toDto(gasPrice), HttpStatus.OK);
   }
 
-  @GetMapping(path = "prices")
-  ResponseEntity<List<GasPriceDto>> getAllGasPrices() {
+  @PutMapping(path = "price/{station}/{type}")
+  ResponseEntity<Object> updateGasPrice(
+      @PathVariable Integer station,
+      @PathVariable Integer type,
+      @RequestBody GasPriceDto gasPriceDto) {
+    GasPrice gasPrice;
     try {
-      return new ResponseEntity<>(
-          gasPriceDtoMapper.toDtoList(gasService.getAllGasPrices()), HttpStatus.OK);
+      gasPrice = gasService.putGasPrice(station, type, gasPriceDto);
     } catch (EntityNotFoundException e) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
     }
+    return new ResponseEntity<>(gasPrice, HttpStatus.OK);
   }
 
   @GetMapping("types/{id}")
@@ -59,6 +75,56 @@ public class GasController {
         gasTypeDtoMapper.toDto(gasService.getGasTypeByName(name)), HttpStatus.OK);
   }
 
+  @PostMapping("types")
+  ResponseEntity<Object> createGasType(@RequestBody GasTypeDto gasTypeDto) {
+    GasType gasType;
+
+    try {
+      gasType = gasService.createGasType(gasTypeDto);
+
+      return new ResponseEntity<>(gasTypeDtoMapper.toDto(gasType), HttpStatus.CREATED);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    } catch (DataIntegrityViolationException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.CONFLICT);
+    }
+  }
+
+  @PutMapping("types/{id}")
+  ResponseEntity<Object> updateGasType(
+      @PathVariable Integer id, @RequestBody GasTypeDto gasTypeDto) {
+    GasType gasType;
+
+    try {
+      gasType = gasService.putGasType(id, gasTypeDto);
+
+      return new ResponseEntity<>(gasTypeDtoMapper.toDto(gasType), HttpStatus.OK);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    } catch (IllegalStateException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  /**
+   * Gas Prices
+   */
+  @GetMapping(path = "prices")
+  ResponseEntity<List<GasPriceDto>> getAllGasPrices() {
+    try {
+      return new ResponseEntity<>(
+          gasPriceDtoMapper.toDtoList(gasService.getAllGasPrices()), HttpStatus.OK);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  /**
+   * Get gas price by gas station and gas type
+   * @param stationId
+   * @param typeId
+   * @return
+   */
   @GetMapping(path = "price/gasStation/{stationId}/gasType/{typeId}")
   ResponseEntity<GasPriceDto> getGasPriceById(
       @PathVariable Integer stationId, @PathVariable Integer typeId) {
@@ -72,7 +138,7 @@ public class GasController {
     }
   }
 
-  @GetMapping(path = "{gasType}")
+  @GetMapping(path = "prices/{gasType}")
   ResponseEntity<List<GasPriceDto>> getGasPriceByGasType(@PathVariable String gasType) {
     try {
       return new ResponseEntity<>(

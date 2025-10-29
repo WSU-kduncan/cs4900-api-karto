@@ -7,11 +7,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Table(name = "trusted_gas_station")
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TrustedGasStation {
 
   @EmbeddedId
@@ -26,4 +30,8 @@ public class TrustedGasStation {
   @ManyToOne
   @MapsId("stationId")
   GasStation gasStation;
+
+  public TrustedGasStation(TrustedGasStationId id) {
+    this.id = id;
+  }
 }
