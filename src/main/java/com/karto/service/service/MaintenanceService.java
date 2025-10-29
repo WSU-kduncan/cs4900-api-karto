@@ -3,7 +3,9 @@ package com.karto.service.service;
 import com.karto.service.dto.MaintenanceDto;
 import com.karto.service.mapper.MaintenanceDtoMapper;
 import com.karto.service.model.Maintenance;
+import com.karto.service.model.MaintenanceTypeDescription;
 import com.karto.service.repository.MaintenanceRepository;
+import com.karto.service.repository.MaintenanceTypeDescriptionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -16,6 +18,8 @@ public class MaintenanceService {
   private final MaintenanceRepository maintenanceRepository;
 
   private final MaintenanceDtoMapper maintenanceDtoMapper;
+
+  private final MaintenanceTypeDescriptionRepository maintenanceTypeDescriptionRepository;
 
   public Maintenance getMaintenanceById(Integer id) throws EntityNotFoundException {
     var response = maintenanceRepository.findById(id);
@@ -53,5 +57,9 @@ public class MaintenanceService {
     maintenanceDtoMapper.updateEntity(maintenanceDto, maintenanceEntity);
     var savedMaintenance = maintenanceRepository.saveAndFlush(maintenanceEntity);
     return savedMaintenance;
+  }
+
+  public List<MaintenanceTypeDescription> getAllMaintenanceTypes() {
+    return maintenanceTypeDescriptionRepository.findAll();
   }
 }

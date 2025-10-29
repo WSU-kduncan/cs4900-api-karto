@@ -1,0 +1,16 @@
+meta {
+  name: Get All Maintenance Types
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{BASE_URL}}/maintenance/type
+  body: json
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -7,6 +7,10 @@
 - Get maintenance by Id
 - Post maintenance
 
+### Maintenance Type
+
+- Get all maintenance types.
+
 ### Car
 
 - GET - all cars
