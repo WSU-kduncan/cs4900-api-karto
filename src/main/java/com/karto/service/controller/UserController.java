@@ -39,7 +39,6 @@ public class UserController {
     if (stationId == null || email == null) {
       return new ResponseEntity<>("Station ID or email was null!", HttpStatus.BAD_REQUEST);
     }
-
     TrustedGasStation trustedGasStation;
     try {
       trustedGasStation = userService.addTrustedGasStation(email, stationId);
@@ -50,7 +49,7 @@ public class UserController {
   }
 
   @PutMapping(path = "{email}/trustedStations")
-  ResponseEntity<Object> updateGasPrice(
+  ResponseEntity<Object> updateTrustedGasStation(
       @PathVariable String email,
       @RequestParam Integer oldStationId,
       @RequestParam Integer newStationId) {
