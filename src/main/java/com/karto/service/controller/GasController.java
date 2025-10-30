@@ -63,6 +63,12 @@ public class GasController {
     return new ResponseEntity<>(gasPrice, HttpStatus.OK);
   }
 
+  @GetMapping("types")
+  ResponseEntity<List<GasTypeDto>> getAllGasTypes() {
+    return new ResponseEntity<>(
+        gasTypeDtoMapper.toDtoList(gasService.getAllGasTypes()), HttpStatus.OK);
+  }
+
   @GetMapping("types/{id}")
   ResponseEntity<GasTypeDto> getGasTypeById(@PathVariable Integer id) {
     return new ResponseEntity<>(
