@@ -1,5 +1,11 @@
 package com.karto.service.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+
 import com.karto.service.model.GasStation;
 import com.karto.service.model.TrustedGasStation;
 import com.karto.service.model.User;
@@ -7,13 +13,10 @@ import com.karto.service.model.composite.TrustedGasStationId;
 import com.karto.service.repository.GasStationRepository;
 import com.karto.service.repository.TrustedGasStationRepository;
 import com.karto.service.repository.UserRepository;
+
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -78,15 +81,13 @@ public class UserService {
           "User not found with email: " + email + " or gas station ID: " + gasStationId);
     }
 
-    List<Integer> gasStationIds =
-        trustedGasStationRepository.findTrustedGasStationStationIdsByUserEmail(email);
+    List<Integer> gasStationIds = trustedGasStationRepository.findTrustedGasStationStationIdsByUserEmail(email);
     if (gasStationIds.contains(gasStationId)) {
       throw new EntityExistsException("Gas Station is already trusted for email: " + email);
     }
 
     TrustedGasStationId trustedGasStationId = new TrustedGasStationId(email, gasStationId);
-    TrustedGasStation trustedGasStation =
-        new TrustedGasStation(trustedGasStationId, user, gasStation);
+    TrustedGasStation trustedGasStation = new TrustedGasStation(trustedGasStationId, user, gasStation);
 
     return trustedGasStationRepository.saveAndFlush(trustedGasStation);
   }
@@ -97,8 +98,7 @@ public class UserService {
     User user = getUserByEmail(email);
 
     GasStation oldGasStation = gasStationRepository.findById(oldGasStationId).orElse(null);
-    TrustedGasStation oldTrustedGasStation =
-        trustedGasStationRepository.findByUserAndGasStation(user, oldGasStation);
+    TrustedGasStation oldTrustedGasStation = trustedGasStationRepository.findByUserAndGasStation(user, oldGasStation);
 
     if (user == null || oldGasStation == null) {
       throw new EntityNotFoundException("User/GasStation not found with email: " + email);
@@ -115,9 +115,15 @@ public class UserService {
         .findById(newGasStationId)
         .orElseThrow(() -> new EntityNotFoundException("Gas station Id not found"));
     TrustedGasStationId trustedGasStationId = new TrustedGasStationId(email, newGasStationId);
-    TrustedGasStation newTrustedGasStation =
-        new TrustedGasStation(trustedGasStationId, user, newGasStation);
+    TrustedGasStation newTrustedGasStation = new TrustedGasStation(trustedGasStationId, user, newGasStation);
 
     return trustedGasStationRepository.saveAndFlush(newTrustedGasStation);
+  }
+
+  public void deleteUser(String email) {
+    if (!userRepository.existsById(email)) {
+      throw new EntityNotFoundException("User not found with: " + email);
+    }
+    userRepository.deleteById(email);
   }
 }

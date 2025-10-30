@@ -1,17 +1,11 @@
 package com.karto.service.controller;
 
-import com.karto.service.dto.UserDto;
-import com.karto.service.mapper.UserDtoMapper;
-import com.karto.service.model.GasStation;
-import com.karto.service.model.TrustedGasStation;
-import com.karto.service.model.User;
-import com.karto.service.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.karto.service.dto.UserDto;
+import com.karto.service.mapper.UserDtoMapper;
+import com.karto.service.model.GasStation;
+import com.karto.service.model.TrustedGasStation;
+import com.karto.service.model.User;
+import com.karto.service.service.UserService;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
 @RestController
-@RequestMapping(
-    path = "user",
-    produces = MediaType.APPLICATION_JSON_VALUE,
-    consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "user", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class UserController {
 
@@ -126,6 +127,16 @@ public class UserController {
     } catch (EntityNotFoundException e) {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @DeleteMapping(path = "{email}")
+  public ResponseEntity<Void> deleteUser(@PathVariable String email) {
+    try {
+      userService.deleteUser(email);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (EntityNotFoundException e) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }

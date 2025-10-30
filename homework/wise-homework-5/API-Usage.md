@@ -83,9 +83,62 @@ Get user by username
     "trustedGasStationIds": []
 ```
 
-### Gas Stations
+### POST - `/user`
+
+Create user
+
+#### Request Body
+
+```
+{
+    "email": "test@test.com"
+    "username": "ThisisaTest"
+    "password": "asdasjlkfrhgqfeqfq"
+}
+
+```
+
+#### Response
+
+```
+{
+    "email": "test@test.com"
+    "username": "ThisisaTest"
+    "password": "asdasjlkfrhgqfeqfq"
+    "createdAt": "2025-10-28T02:24:49Z"
+}
+
+```
+
+### PUT - `/user/:id`
+
+Update a user
+
+#### Request Body
+
+```
+{
+    "email": "changeTest@test.com"
+    "username": "ThisisaTest"
+    "password": "asdasjlkfrhgqfeqfq"
+}
+```
+
+#### Response
+
+```
+{
+    "email": "changeTest@test.com"
+    "username": "ThisisaTest"
+    "password": "asdasjlkfrhgqfeqfq"
+}
+```
+
+## Gas Stations
 
 ### GET - `/gasstaion`
+
+Get All Gas Stations
 
 #### Request Body
 
@@ -132,6 +185,8 @@ Get user by username
 
 ### GET - `gasstation/:id`
 
+Search Gas Stations by Id
+
 #### Request Body
 
 ```
@@ -163,6 +218,8 @@ Get user by username
 
 ### GET - `gasstation/:name`
 
+Search Gas Stations by Name
+
 #### Request Body
 
 ```
@@ -188,5 +245,71 @@ Get user by username
         "example.bob@example.test"
         "example.ned@example.test"
     ]
+}
+```
+
+### POST - `gasstation/`
+
+Create gasstaion
+
+#### Request Body
+
+```
+{
+    "longitude": .52987,
+    "latitude": .351804,
+    "name": "Some Station",
+    "addressLine": "4",
+    "city": "Sidney",
+    "state": "Ohio",
+    "zip": "1234567",
+}
+```
+
+#### Response
+
+```
+{
+    "id": 11,
+    "longitude": .52987,
+    "latitude": .351804,
+    "name": "Some Station",
+    "addressLine": "4",
+    "city": "Sidney",
+    "state": "Ohio",
+    "zip": "1234567",
+}
+`
+```
+
+### PUT - `gasstation/:id`
+
+Update Gas Station
+
+#### Request Body
+
+```
+{
+    "longitude": .52987,
+    "latitude": .351804,
+    "name": "Some Station",
+    "addressLine": "4",
+    "city": "Not Sidney",
+    "state": "Ohio",
+    "zip": "1234567",
+}
+```
+
+#### Response
+
+```
+{
+    "longitude": .52987,
+    "latitude": .351804,
+    "name": "Some Station",
+    "addressLine": "4",
+    "city": "Not Sidney",
+    "state": "Ohio",
+    "zip": "1234567",
 }
 ```

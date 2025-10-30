@@ -1,12 +1,15 @@
 package com.karto.service.service;
 
-import com.karto.service.model.GasStation;
-import com.karto.service.repository.GasStationRepository;
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
+
+import com.karto.service.model.GasStation;
+import com.karto.service.repository.GasStationRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -48,5 +51,12 @@ public class GasStationService {
     existingStation.setZip(gasStation.getZip());
 
     return gasStationRepository.saveAndFlush(existingStation);
+  }
+
+  public void deleteGasStation(Integer id) {
+    if (!gasStationRepository.existsById(id)) {
+      throw new EntityNotFoundException("Gas station not found with: " + id);
+    }
+    gasStationRepository.deleteById(id);
   }
 }

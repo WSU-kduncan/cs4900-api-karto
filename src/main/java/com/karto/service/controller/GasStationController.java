@@ -1,15 +1,11 @@
 package com.karto.service.controller;
 
-import com.karto.service.dto.GasStationDto;
-import com.karto.service.mapper.GasStationDtoMapper;
-import com.karto.service.model.GasStation;
-import com.karto.service.service.GasStationService;
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,11 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.karto.service.dto.GasStationDto;
+import com.karto.service.mapper.GasStationDtoMapper;
+import com.karto.service.model.GasStation;
+import com.karto.service.service.GasStationService;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
 @RestController
-@RequestMapping(
-    path = "gasstation",
-    produces = MediaType.APPLICATION_JSON_VALUE,
-    consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "gasstation", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class GasStationController {
 
@@ -76,6 +77,16 @@ public class GasStationController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @DeleteMapping(path = "{id}")
+  public ResponseEntity<Void> deleteGasStation(@PathVariable Integer id) {
+    try {
+      gasStationService.deleteGasStation(id);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
 }
