@@ -26,9 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(
-    path = "gas",
-    produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "gas", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GasController {
   private final GasService gasService;
 
