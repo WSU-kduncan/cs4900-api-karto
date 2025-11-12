@@ -9,21 +9,34 @@ import com.karto.service.repository.TrustedGasStationRepository;
 import com.karto.service.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
 
   private final UserRepository userRepository;
 
   private final TrustedGasStationRepository trustedGasStationRepository;
 
   private final GasStationRepository gasStationRepository;
+
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    var user = userRepository
+        .findById(email)
+        .orElseThrow(() -> new UsernameNotFoundException("Email not found"));
+    return new org.springframework.security.core.userdetails.User(
+        user.getEmail(), user.getPassword(), new ArrayList());
+  }
 
   public List<User> getAllUsers() {
     return userRepository.findAll();
