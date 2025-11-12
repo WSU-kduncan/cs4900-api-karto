@@ -1,12 +1,13 @@
 package com.karto.service.service;
 
-import com.karto.service.dto.LoginDto;
 import com.karto.service.dto.UserDto;
 import com.karto.service.mapper.UserDtoMapper;
 import com.karto.service.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,15 +16,45 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthenticationService implements AuthenticationProvider {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final UserDtoMapper userDtoMapper;
+  private final UserService userService;
+
+  public class JwtToken extends AbstractAuthenticationToken {
+    public JwtToken(
+        Object principal, String jwtToken, Collection<? extends GrantedAuthority> authorities) {
+      super(authorities);
+      this.principal = principal;
+      this.jwtToken = jwtToken;
+      setAuthenticated(true);
+    }
+
+    private final Object principal;
+    private final String jwtToken;
+
+    @Override
+    public Object getCredentials() {
+      return jwtToken;
+    }
+
+    @Override
+    public Object getPrincipal() {
+      return principal;
+    }
+  }
 
   @Value("${password-encoder.secret}")
   private String SECRET;
@@ -37,15 +68,6 @@ public class AuthenticationService {
     entity.setPassword(passwordEncoder.encode(entity.getPassword()));
     var back = userRepository.saveAndFlush(entity);
     return back;
-  }
-
-  public String login(LoginDto loginDto) throws Exception {
-    var entity = userRepository
-        .findById(loginDto.getEmail())
-        .orElseThrow(() -> new Exception("No email found for " + loginDto.getEmail()));
-    if (!passwordEncoder.matches(loginDto.getPassword(), entity.getPassword()))
-      throw new Exception("Invalid Credentials");
-    return generateToken(entity.getEmail());
   }
 
   public String generateToken(String email) {
@@ -90,5 +112,25 @@ public class AuthenticationService {
         .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
         .encryptWith(getSignKey(), Jwts.ENC.A256GCM)
         .compact();
+  }
+
+  @Override
+  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    String email = authentication.getName();
+    String password = authentication.getCredentials().toString();
+
+    var user = userService.getUserByEmail(email);
+    if (!passwordEncoder.matches(password, user.getPassword())) {
+      throw new BadCredentialsException("Invalid credentials");
+    }
+
+    String token = generateToken(email);
+    return new JwtToken(user, token, new ArrayList<>());
+  }
+
+  @Override
+  public boolean supports(Class<?> authentication) {
+    return authentication.equals(
+        org.springframework.security.authentication.UsernamePasswordAuthenticationToken.class);
   }
 }

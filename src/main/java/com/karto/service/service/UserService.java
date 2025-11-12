@@ -1,5 +1,7 @@
 package com.karto.service.service;
 
+import com.karto.service.dto.UserDto;
+import com.karto.service.mapper.UserDtoMapper;
 import com.karto.service.model.GasStation;
 import com.karto.service.model.TrustedGasStation;
 import com.karto.service.model.User;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +27,9 @@ public class UserService {
   private final TrustedGasStationRepository trustedGasStationRepository;
 
   private final GasStationRepository gasStationRepository;
+
+  private final UserDtoMapper userDtoMapper;
+  private final PasswordEncoder passwordEncoder;
 
   public List<User> getAllUsers() {
     return userRepository.findAll();
@@ -119,5 +125,16 @@ public class UserService {
         new TrustedGasStation(trustedGasStationId, user, newGasStation);
 
     return trustedGasStationRepository.saveAndFlush(newTrustedGasStation);
+  }
+
+  public User addUser(UserDto userDto) throws Exception {
+    if (userRepository.existsById(userDto.getEmail()))
+      throw new Exception("Duplicate Email for " + userDto.getEmail());
+    if (userRepository.existsByUsername(userDto.getUsername()))
+      throw new Exception("Duplicate Username for " + userDto.getUsername());
+    var entity = userDtoMapper.toEntity(userDto);
+    entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+    var back = userRepository.saveAndFlush(entity);
+    return back;
   }
 }

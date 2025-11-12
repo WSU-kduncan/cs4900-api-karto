@@ -6,14 +6,16 @@ import com.karto.service.mapper.UserDtoMapper;
 import com.karto.service.model.GasStation;
 import com.karto.service.model.TrustedGasStation;
 import com.karto.service.model.User;
-import com.karto.service.service.AuthenticationService;
 import com.karto.service.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +37,7 @@ public class UserController {
 
   private final UserDtoMapper userDtoMapper;
 
-  private final AuthenticationService authenticationService;
+  private final AuthenticationManager authenticationManager;
 
   @PostMapping(path = "{email}/trustedStations/{stationId}")
   ResponseEntity<Object> addTrustedGasStation(
@@ -110,7 +112,7 @@ public class UserController {
   @PostMapping()
   public ResponseEntity<Object> createUser(@RequestBody UserDto userDto) {
     try {
-      User createdUser = authenticationService.addUser(userDto);
+      User createdUser = userService.addUser(userDto);
       return new ResponseEntity<>(userDtoMapper.toDto(createdUser), HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(null, HttpStatus.CONFLICT);
@@ -122,8 +124,9 @@ public class UserController {
   @PostMapping("login")
   public ResponseEntity<Object> login(@RequestBody LoginDto loginDto) {
     try {
-      String token = authenticationService.login(loginDto);
-      return new ResponseEntity<>(token, HttpStatus.OK);
+      var auth = authenticationManager.authenticate(
+          new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+      return new ResponseEntity<>(Map.of("token", auth.getCredentials()), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
