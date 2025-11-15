@@ -29,6 +29,7 @@
 - GET - users by id
 - GET - users by username
 - POST - create new users
+- POST - login with email and password
 - PUT - update users
 
 ### GasStation

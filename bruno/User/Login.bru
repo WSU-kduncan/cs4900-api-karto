@@ -1,0 +1,23 @@
+meta {
+  name: Login
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{BASE_URL}}/user/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "j.wise@example.test",
+    "password": "jwise2"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
