@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(
-    path = "maintenance",
-    produces = MediaType.APPLICATION_JSON_VALUE,
-    consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "maintenance", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MaintenanceController {
   private final MaintenanceService maintenanceService;
 
