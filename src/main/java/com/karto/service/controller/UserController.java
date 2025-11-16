@@ -8,8 +8,8 @@ import com.karto.service.model.TrustedGasStation;
 import com.karto.service.model.User;
 import com.karto.service.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -123,7 +123,11 @@ public class UserController {
     try {
       var auth = authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
-      return new ResponseEntity<>(Map.of("token", auth.getCredentials()), HttpStatus.OK);
+      var user = userService.getUserByEmail(loginDto.getEmail());
+      var map = new HashMap<>();
+      map.put("token", auth.getCredentials());
+      map.put("details", userDtoMapper.toDto(user));
+      return new ResponseEntity<>(map, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
