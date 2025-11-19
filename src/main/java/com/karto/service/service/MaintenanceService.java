@@ -54,4 +54,8 @@ public class MaintenanceService {
     var savedMaintenance = maintenanceRepository.saveAndFlush(maintenanceEntity);
     return savedMaintenance;
   }
+
+  public void deleteMaintenance(Integer id) {
+    maintenanceRepository.deleteById(id);
+  }
 }
