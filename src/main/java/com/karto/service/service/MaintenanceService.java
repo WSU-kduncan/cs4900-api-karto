@@ -3,7 +3,9 @@ package com.karto.service.service;
 import com.karto.service.dto.MaintenanceDto;
 import com.karto.service.mapper.MaintenanceDtoMapper;
 import com.karto.service.model.Maintenance;
+import com.karto.service.model.MaintenanceTypeDescription;
 import com.karto.service.repository.MaintenanceRepository;
+import com.karto.service.repository.MaintenanceTypeDescriptionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MaintenanceService {
   private final MaintenanceRepository maintenanceRepository;
+
+  private final MaintenanceTypeDescriptionRepository maintenanceTypeDescriptionRepository;
 
   private final MaintenanceDtoMapper maintenanceDtoMapper;
 
@@ -30,6 +34,10 @@ public class MaintenanceService {
 
   public List<Maintenance> getAllMaintenanceByCar(String carVin) {
     return maintenanceRepository.findByCarVinOrderByDateDesc(carVin);
+  }
+
+  public List<MaintenanceTypeDescription> getAllMaintenanceTypes() {
+    return maintenanceTypeDescriptionRepository.findAll();
   }
 
   public Maintenance createMaintenance(MaintenanceDto maintenanceDto) {

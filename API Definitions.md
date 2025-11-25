@@ -2,10 +2,11 @@
 
 ### Maintenance
 
-- Get all maintenances
-- Get all maintenances by car
-- Get maintenance by Id
-- Post maintenance
+- GET all maintenances
+- GET all maintenances by car
+- GET maintenance by Id
+- POST maintenance
+- GET all maintenance types
 
 ### Car
 
