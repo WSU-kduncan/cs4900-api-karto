@@ -58,6 +58,7 @@ public class MaintenanceController {
       return ResponseEntity.badRequest().body(e.getLocalizedMessage());
     }
   }
+
   @DeleteMapping("{id}")
   ResponseEntity<Object> deleteMaintenance(@PathVariable Integer id) {
     try {
