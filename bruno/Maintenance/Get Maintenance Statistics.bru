@@ -1,0 +1,20 @@
+meta {
+  name: Get Maintenance Statistics
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{BASE_URL}}/maintenance/statistics/:vin
+  body: none
+  auth: inherit
+}
+
+params:path {
+  vin: KNDJT2A29D7890123
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,6 +1,7 @@
 package com.karto.service.controller;
 
 import com.karto.service.dto.MaintenanceDto;
+import com.karto.service.dto.MaintenanceStatisticDto;
 import com.karto.service.dto.MaintenanceTypeDescriptionDto;
 import com.karto.service.mapper.MaintenanceDtoMapper;
 import com.karto.service.mapper.MaintenanceTypeDescriptionDtoMapper;
@@ -57,6 +58,15 @@ public class MaintenanceController {
   ResponseEntity<List<MaintenanceTypeDescriptionDto>> getAllMaintenanceTypes() {
     return ResponseEntity.ok(
         maintenanceTypeDescriptionDtoMapper.toDtoList(maintenanceService.getAllMaintenanceTypes()));
+  }
+
+  @GetMapping("statistics/{carVin}")
+  ResponseEntity<MaintenanceStatisticDto> getMaintenanceStatistics(@PathVariable String carVin) {
+    try {
+      return ResponseEntity.ok(maintenanceService.getMaintenanceStatistic(carVin));
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().build();
+    }
   }
 
   @PostMapping

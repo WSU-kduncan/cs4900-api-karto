@@ -7,6 +7,7 @@
 - GET maintenance by Id
 - POST maintenance
 - GET all maintenance types
+- GET maintenance statistics by car
 
 ### Car
 

@@ -1,6 +1,7 @@
 package com.karto.service.service;
 
 import com.karto.service.dto.MaintenanceDto;
+import com.karto.service.dto.MaintenanceStatisticDto;
 import com.karto.service.mapper.MaintenanceDtoMapper;
 import com.karto.service.model.Maintenance;
 import com.karto.service.model.MaintenanceTypeDescription;
@@ -52,6 +53,16 @@ public class MaintenanceService {
     }
 
     return savedMaintenance;
+  }
+
+  public MaintenanceStatisticDto getMaintenanceStatistic(String carVin) {
+    var latest = maintenanceRepository.findFirstByCarVinOrderByDateDesc(carVin);
+    return MaintenanceStatisticDto.builder()
+        .currentMileage(latest.getMileage())
+        .lastUpdated(latest.getDate())
+        .numberMaintenances(maintenanceRepository.countByCarVin(carVin))
+        .totalCost(maintenanceRepository.sumCostByCarVin(carVin))
+        .build();
   }
 
   public Maintenance putMaintenance(Integer id, MaintenanceDto maintenanceDto) {
