@@ -1,7 +1,9 @@
 package com.karto.service.controller;
 
 import com.karto.service.dto.MaintenanceDto;
+import com.karto.service.dto.MaintenanceTypeDescriptionDto;
 import com.karto.service.mapper.MaintenanceDtoMapper;
+import com.karto.service.mapper.MaintenanceTypeDescriptionDtoMapper;
 import com.karto.service.service.MaintenanceService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -25,6 +27,8 @@ public class MaintenanceController {
 
   private final MaintenanceDtoMapper maintenanceDtoMapper;
 
+  private final MaintenanceTypeDescriptionDtoMapper maintenanceTypeDescriptionDtoMapper;
+
   @GetMapping("all")
   ResponseEntity<List<MaintenanceDto>> getAllMaintenanceLogs() {
     return new ResponseEntity<>(
@@ -46,6 +50,12 @@ public class MaintenanceController {
     return new ResponseEntity<>(
         maintenanceDtoMapper.toDtoList(maintenanceService.getAllMaintenanceByCar(carVin)),
         HttpStatus.OK);
+  }
+
+  @GetMapping("types")
+  ResponseEntity<List<MaintenanceTypeDescriptionDto>> getAllMaintenanceTypes() {
+    return ResponseEntity.ok(
+        maintenanceTypeDescriptionDtoMapper.toDtoList(maintenanceService.getAllMaintenanceTypes()));
   }
 
   @PostMapping
