@@ -10,7 +10,7 @@ public class CarDto {
 
   String vin;
 
-  Byte[] image;
+  byte[] image;
 
   String userEmail;
 
