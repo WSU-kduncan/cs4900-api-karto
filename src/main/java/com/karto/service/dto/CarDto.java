@@ -1,7 +1,6 @@
 package com.karto.service.dto;
 
 import java.time.Year;
-
 import lombok.Builder;
 import lombok.Data;
 
