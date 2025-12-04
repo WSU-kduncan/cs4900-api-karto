@@ -98,8 +98,8 @@ public class UserService {
   }
 
   public void removeTrustedGasStation(String email, Integer gasStationId) {
-TrustedGasStationId id = new TrustedGasStationId(email, gasStationId);
-   if (trustedGasStationRepository.existsById(id)) {
+    TrustedGasStationId id = new TrustedGasStationId(email, gasStationId);
+    if (trustedGasStationRepository.existsById(id)) {
       trustedGasStationRepository.deleteById(id);
     } else {
       throw new EntityNotFoundException("Trusted Station not found by user " + email);
