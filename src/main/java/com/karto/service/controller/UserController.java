@@ -10,6 +10,9 @@ import com.karto.service.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.print.attribute.standard.Media;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
 @RequestMapping(path = "user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -105,6 +109,17 @@ public class UserController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+
+  @DeleteMapping(path = "{email}/trustedStations/{stationId}")
+  public ResponseEntity<Object> removeTrustedGasStation(
+    @PathVariable String email, @PathVariable Integer stationId) {
+      try {
+        userService.removeTrustedGasStation(email, stationId);
+        return new ResponseEntity<>(HttpStatus.OK);
+      } catch (EntityNotFoundException e) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+    }
 
   @PostMapping()
   public ResponseEntity<Object> createUser(@RequestBody UserDto userDto) {

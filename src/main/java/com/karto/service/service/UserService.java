@@ -97,6 +97,15 @@ public class UserService {
     return trustedGasStationRepository.saveAndFlush(trustedGasStation);
   }
 
+  public void removeTrustedGasStation(String email, Integer gasStationId) {
+TrustedGasStationId id = new TrustedGasStationId(email, gasStationId);
+   if (trustedGasStationRepository.existsById(id)) {
+      trustedGasStationRepository.deleteById(id);
+    } else {
+      throw new EntityNotFoundException("Trusted Station not found by user " + email);
+    }
+  }
+
   public TrustedGasStation putTrustedGasStation(
       String email, Integer oldGasStationId, Integer newGasStationId)
       throws EntityNotFoundException {
