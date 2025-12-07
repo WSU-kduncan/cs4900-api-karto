@@ -54,7 +54,7 @@ public class UserController {
   }
 
   @PutMapping(path = "{email}/trustedStations")
-  ResponseEntity<Object> updateGasPrice(
+  ResponseEntity<Object> updateTrustedGasStation(
       @PathVariable String email,
       @RequestParam Integer oldStationId,
       @RequestParam Integer newStationId) {
