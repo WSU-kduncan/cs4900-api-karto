@@ -1,6 +1,6 @@
 # API Routes
 
-### Maintenance Controller ([/maintenance/]())
+### Maintenance Controller ([/maintenance/](./src/main/java/com/karto/service/controller/MaintenanceController.java))
 
 - **GET** - all maintenances
 - **GET** - maintenance by id
@@ -11,7 +11,7 @@
 - **POST** - maintenance
 - **DELETE** - maintenance by id
 
-### Car Controller ([/cars/]()) 
+### Car Controller ([/cars/](./src/main/java/com/karto/service/controller/CarController.java)) 
 
 - **GET** - all cars
 - **GET** - all cars by VIN
@@ -19,7 +19,7 @@
 - **PUT** - update car by VIN
 - **POST** - add a new car
 
-### Gas Controller ([/gas/]())
+### Gas Controller ([/gas/](./src/main/java/com/karto/service/controller/GasController.java))
 
 - **GET** - all gas types
 - **GET** - gas type by id
@@ -35,7 +35,7 @@
 
 - **GET** - users by trusted gas station id
 
-### User Controller ([/user/]())
+### User Controller ([/user/](./src/main/java/com/karto/service/controller/UserController.java))
 
 - **GET** - all users
 - **GET** - users by id
@@ -49,7 +49,7 @@
 - **PUT** - update trusted gas station
 - **DELETE** - remove a trusted gas station
 
-### Gas Station Controller ([/gasstation/]())
+### Gas Station Controller ([/gasstation/](./src/main/java/com/karto/service/controller/GasStationController.java))
 
 - **GET** - all gas stations
 - **GET** - gas station by id
