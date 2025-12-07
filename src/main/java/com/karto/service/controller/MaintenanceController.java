@@ -69,6 +69,17 @@ public class MaintenanceController {
     }
   }
 
+  @PutMapping("{id}")
+  ResponseEntity<Object> putMaintenance(
+      @PathVariable Integer id, @RequestBody MaintenanceDto maintenanceDto) {
+    try {
+      var maintenance = maintenanceService.putMaintenance(id, maintenanceDto);
+      return new ResponseEntity<>(maintenanceDtoMapper.toDto(maintenance), HttpStatus.CREATED);
+    } catch (EntityNotFoundException e) {
+      return ResponseEntity.badRequest().body(e.getLocalizedMessage());
+    }
+  }
+
   @PostMapping
   ResponseEntity<Object> postMaintenance(@RequestBody MaintenanceDto maintenanceDto) {
     try {
@@ -86,17 +97,6 @@ public class MaintenanceController {
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body("Could not delete maintenance.");
-    }
-  }
-
-  @PutMapping("{id}")
-  ResponseEntity<Object> putMaintenance(
-      @PathVariable Integer id, @RequestBody MaintenanceDto maintenanceDto) {
-    try {
-      var maintenance = maintenanceService.putMaintenance(id, maintenanceDto);
-      return new ResponseEntity<>(maintenanceDtoMapper.toDto(maintenance), HttpStatus.CREATED);
-    } catch (EntityNotFoundException e) {
-      return ResponseEntity.badRequest().body(e.getLocalizedMessage());
     }
   }
 }
