@@ -54,6 +54,5 @@
 - **GET** - all gas stations
 - **GET** - gas station by id
 - **GET** - gas station by name
-- **GET** - gas station by trusted
 - **PUT** - update gas station
 - **POST** - create new gas station
