@@ -1,18 +1,18 @@
 meta {
   name: Update Trusted Gas Station
   type: http
-  seq: 2
+  seq: 8
 }
 
 put {
-  url: {{BASE_URL}}/user/:email/trustedStations?oldStationId=2&newStationId=4
+  url: {{BASE_URL}}/user/:email/trustedStations?oldStationId=2&newStationId=5
   body: json
   auth: inherit
 }
 
 params:query {
   oldStationId: 2
-  newStationId: 4
+  newStationId: 5
 }
 
 params:path {
@@ -34,4 +34,5 @@ body:json {
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

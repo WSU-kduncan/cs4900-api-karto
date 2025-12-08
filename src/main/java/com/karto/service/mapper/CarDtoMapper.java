@@ -38,6 +38,9 @@ public interface CarDtoMapper {
 
   @Mapping(source = "image", target = "image.image")
   @Mapping(source = "userEmail", target = "user.email")
-  @Mapping(source = "gasTypeId", target = "gasType.id")
+  // When updating an existing Car entity we must not let MapStruct change the identifier
+  // of the associated GasType (that would attempt to alter a managed entity's id). The
+  // service layer will load and set the managed GasType instance after mapping.
+  @Mapping(target = "gasType", ignore = true)
   Car updateEntity(CarDto carDto, @MappingTarget Car car) throws EntityNotFoundException;
 }

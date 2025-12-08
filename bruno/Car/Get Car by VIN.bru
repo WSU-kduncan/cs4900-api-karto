@@ -1,13 +1,17 @@
 meta {
-  name: Get All Cars
+  name: Get Car by VIN
   type: http
-  seq: 1
+  seq: 3
 }
 
 get {
-  url: {{BASE_URL}}/cars
+  url: {{BASE_URL}}/cars/:vin
   body: json
   auth: inherit
+}
+
+params:path {
+  vin: 1N4AL11D75C987654
 }
 
 settings {

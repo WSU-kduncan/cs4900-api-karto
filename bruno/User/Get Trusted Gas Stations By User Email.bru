@@ -1,17 +1,17 @@
 meta {
-  name: Get Gas Price By Diesel Gas Type
+  name: Get Trusted Gas Stations By User Email
   type: http
-  seq: 1
+  seq: 7
 }
 
 get {
-  url: {{BASE_URL}}/gas/prices/:gasType
-  body: none
+  url: {{BASE_URL}}/user/:email/trustedStations
+  body: json
   auth: inherit
 }
 
 params:path {
-  gasType: Diesel
+  email: jack.black@example.test
 }
 
 headers {

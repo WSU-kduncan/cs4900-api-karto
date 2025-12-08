@@ -37,36 +37,6 @@ public class UserController {
 
   private final AuthenticationManager authenticationManager;
 
-  @PostMapping(path = "{email}/trustedStations/{stationId}")
-  ResponseEntity<Object> addTrustedGasStation(
-      @PathVariable String email, @PathVariable Integer stationId) {
-    if (stationId == null || email == null) {
-      return new ResponseEntity<>("Station ID or email was null!", HttpStatus.BAD_REQUEST);
-    }
-
-    TrustedGasStation trustedGasStation;
-    try {
-      trustedGasStation = userService.addTrustedGasStation(email, stationId);
-    } catch (EntityNotFoundException e) {
-      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-    }
-    return new ResponseEntity<>(trustedGasStation, HttpStatus.OK);
-  }
-
-  @PutMapping(path = "{email}/trustedStations")
-  ResponseEntity<Object> updateGasPrice(
-      @PathVariable String email,
-      @RequestParam Integer oldStationId,
-      @RequestParam Integer newStationId) {
-    TrustedGasStation trustedGasStation;
-    try {
-      trustedGasStation = userService.putTrustedGasStation(email, oldStationId, newStationId);
-    } catch (EntityNotFoundException e) {
-      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-    }
-    return new ResponseEntity<>(trustedGasStation, HttpStatus.OK);
-  }
-
   @GetMapping
   public ResponseEntity<List<UserDto>> getAllUsers() {
     try {
@@ -97,23 +67,16 @@ public class UserController {
     }
   }
 
-  @GetMapping(path = "{email}/trustedStations")
-  public ResponseEntity<List<GasStation>> getTrustedGasStationsByUser(@PathVariable String email) {
+  @PutMapping("{email}")
+  public ResponseEntity<Object> updateUser(
+      @PathVariable String email, @RequestBody UserDto userDto) {
     try {
-      User user = userService.getUserByEmail(email);
-      return new ResponseEntity<>(userService.getGasStationByUser(user), HttpStatus.OK);
+      User user = userDtoMapper.toEntity(userDto);
+      User updatedUser = userService.updateUser(email, user);
+      return new ResponseEntity<>(userDtoMapper.toDto(updatedUser), HttpStatus.OK);
     } catch (EntityNotFoundException e) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-  }
-
-  @DeleteMapping(path = "{email}/trustedStations/{stationId}")
-  public ResponseEntity<Object> removeTrustedGasStation(
-      @PathVariable String email, @PathVariable Integer stationId) {
-    try {
-      userService.removeTrustedGasStation(email, stationId);
-      return new ResponseEntity<>(HttpStatus.OK);
-    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
@@ -145,16 +108,53 @@ public class UserController {
     }
   }
 
-  @PutMapping("{email}")
-  public ResponseEntity<Object> updateUser(
-      @PathVariable String email, @RequestBody UserDto userDto) {
+  @GetMapping(path = "{email}/trustedStations")
+  public ResponseEntity<List<GasStation>> getTrustedGasStationsByUser(@PathVariable String email) {
     try {
-      User user = userDtoMapper.toEntity(userDto);
-      User updatedUser = userService.updateUser(email, user);
-      return new ResponseEntity<>(userDtoMapper.toDto(updatedUser), HttpStatus.OK);
+      User user = userService.getUserByEmail(email);
+      return new ResponseEntity<>(userService.getGasStationByUser(user), HttpStatus.OK);
     } catch (EntityNotFoundException e) {
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @PostMapping(path = "{email}/trustedStations/{stationId}")
+  ResponseEntity<Object> addTrustedGasStation(
+      @PathVariable String email, @PathVariable Integer stationId) {
+    if (stationId == null || email == null) {
+      return new ResponseEntity<>("Station ID or email was null!", HttpStatus.BAD_REQUEST);
+    }
+
+    TrustedGasStation trustedGasStation;
+    try {
+      trustedGasStation = userService.addTrustedGasStation(email, stationId);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(trustedGasStation, HttpStatus.OK);
+  }
+
+  @PutMapping(path = "{email}/trustedStations")
+  ResponseEntity<Object> updateTrustedGasStation(
+      @PathVariable String email,
+      @RequestParam Integer oldStationId,
+      @RequestParam Integer newStationId) {
+    TrustedGasStation trustedGasStation;
+    try {
+      trustedGasStation = userService.putTrustedGasStation(email, oldStationId, newStationId);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(trustedGasStation, HttpStatus.OK);
+  }
+
+  @DeleteMapping(path = "{email}/trustedStations/{stationId}")
+  public ResponseEntity<Object> removeTrustedGasStation(
+      @PathVariable String email, @PathVariable Integer stationId) {
+    try {
+      userService.removeTrustedGasStation(email, stationId);
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (EntityNotFoundException e) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }

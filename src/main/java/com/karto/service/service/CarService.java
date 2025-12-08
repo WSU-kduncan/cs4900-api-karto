@@ -23,6 +23,8 @@ public class CarService {
 
   private final CarDtoMapper carDtoMapper;
 
+  private final GasService gasService;
+
   public List<Car> getAllCars() throws EntityNotFoundException {
     return carRepository.findAll();
   }
@@ -46,7 +48,15 @@ public class CarService {
         .findById(vin)
         .orElseThrow(() -> new EntityNotFoundException("Car with vin " + vin + " not found."));
 
-    return carRepository.saveAndFlush(carDtoMapper.updateEntity(carDto, existingCar));
+    // Let the mapper update the mutable fields on the existing entity
+    Car updatedCar = carDtoMapper.updateEntity(carDto, existingCar);
+
+    // If the request provided a gasTypeId, load the managed GasType entity and set it
+    if (carDto.getGasTypeId() != null) {
+      updatedCar.setGasType(gasService.getGasTypeById(carDto.getGasTypeId()));
+    }
+
+    return carRepository.saveAndFlush(updatedCar);
   }
 
   public Car createNewCar(CarDto carDto) throws EntityNotFoundException {
@@ -56,7 +66,14 @@ public class CarService {
           "Car with vin " + carDto.getVin() + " already exists.");
     }
 
-    return carRepository.saveAndFlush(carDtoMapper.toEntity(carDto));
+    Car car = carDtoMapper.toEntity(carDto);
+
+    // If caller provided a gasTypeId, fetch the managed GasType entity and attach it
+    if (carDto.getGasTypeId() != null) {
+      car.setGasType(gasService.getGasTypeById(carDto.getGasTypeId()));
+    }
+
+    return carRepository.saveAndFlush(car);
   }
 
   /**

@@ -19,7 +19,7 @@ public class Car {
   @Column(name = "car_vin", columnDefinition = "CHAR(17)", length = 17, nullable = false)
   String vin;
 
-  @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true, optional = true)
   CarImage image;
 
   @JoinColumn(name = "user_email", nullable = false)
