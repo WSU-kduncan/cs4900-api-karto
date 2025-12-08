@@ -1,20 +1,17 @@
 package com.karto.service.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
-
 import com.karto.service.dto.CarDto;
 import com.karto.service.mapper.CarDtoMapper;
 import com.karto.service.model.Car;
 import com.karto.service.model.CarImage;
 import com.karto.service.repository.CarImageRepository;
 import com.karto.service.repository.CarRepository;
-
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +22,7 @@ public class CarService {
   private final CarImageRepository carImageRepository;
 
   private final CarDtoMapper carDtoMapper;
-  
+
   private final GasService gasService;
 
   public List<Car> getAllCars() throws EntityNotFoundException {
