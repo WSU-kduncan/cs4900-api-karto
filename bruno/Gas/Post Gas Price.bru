@@ -1,7 +1,7 @@
 meta {
   name: Save Gas Price
   type: http
-  seq: 1
+  seq: 10
 }
 
 post {
@@ -11,16 +11,17 @@ post {
 }
 
 body:json {
-    {
-      "id": {
-        "gasStationId": 4,
-        "gasTypeId": 8
-      },
-      "price": 1.0875,
-      "updated": "2025-10-21T16:39:05Z"
-    }
+  {
+    "id": {
+      "gasStationId": 11,
+      "gasTypeId": 5
+    },
+    "price": 12,
+    "updated": "2025-11-20T19:55:01.825Z"
+  }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

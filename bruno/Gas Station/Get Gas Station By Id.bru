@@ -1,13 +1,17 @@
 meta {
   name: Get Gas Station By Id
   type: http
-  seq: 10
+  seq: 2
 }
 
 get {
-  url: {{BASE_URL}}/gasstation/1
+  url: {{BASE_URL}}/gasstation/:id
   body: json
   auth: inherit
+}
+
+params:path {
+  id: 4
 }
 
 settings {

@@ -1,17 +1,17 @@
 meta {
   name: Get All Cars Owned By
   type: http
-  seq: 4
+  seq: 2
 }
 
 get {
-  url: {{BASE_URL}}/cars/ownedBy/:ownerEmail
+  url: {{BASE_URL}}/cars/ownedBy/:email
   body: json
   auth: inherit
 }
 
 params:path {
-  ownerEmail: irene.z@example.test
+  email: irene.z@example.test
 }
 
 settings {

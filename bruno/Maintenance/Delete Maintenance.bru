@@ -1,13 +1,17 @@
 meta {
-  name: Post Create Gas Station
+  name: Delete Maintenance
   type: http
   seq: 8
 }
 
-post {
-  url: {{BASE_URL}}/gasstation
+delete {
+  url: {{BASE_URL}}/maintenance/:id
   body: none
   auth: inherit
+}
+
+params:path {
+  id: 1
 }
 
 settings {
